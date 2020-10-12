@@ -1,0 +1,13 @@
+Release Notes
+2019-04-10
+MM32F003_q std lib version is updated to Ver1.0.8
+
+2019-01-28
+MM32F003_q std lib version is updated to Ver1.0.7
+
+2018-11-28
+MM32F003_q std lib version is updated to Ver1.0.6
+
+2018-9-14
+MM32F003_q std lib version is updated to Ver1.0.4
+
