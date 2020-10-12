@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32F031CBT6_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32L073PF_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32SPIN27PF_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32F031C6T6_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32SPIN05PF_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32F003TW_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32F032R8T6_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32L062PF_APP_DEFAULT.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\App_Default\EWARM\MM32SPIN06PF_APP_DEFAULT.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>
