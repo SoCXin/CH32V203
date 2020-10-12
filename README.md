@@ -1,14 +1,16 @@
-﻿# [image](https://github.com/sochub/image) 
-[![sites](SoC/qitas.png)](http://www.qitas.cn)
-#### 归属：[SDK](https://github.com/sochub/SDK)
+﻿# [MM32x0](https://github.com/SoCXin/MM32x0)
 
-用于制作和打包相关系统的镜像文件
+[![sites](http://182.61.61.133/link/resources/SoC.png)](http://www.SoC.Xin)
 
-### 镜像烧录工具
+#### [Vendor](https://github.com/SoCXin/Vendor)：[MindMotion](http://www.mm32.com.cn/)
+#### [Core](https://github.com/SoCXin/Cortex)：[Cortex M0](https://github.com/SoCXin/CM0)
+#### [Level](https://github.com/SoCXin/Level)：72MHz
 
-* [flash](https://github.com/sochub/flash)
-* [winimage](https://github.com/Qitas/winimage)
-* [PhoenixCard](https://github.com/sochub/PhoenixCard) 
+[MM32x0](https://github.com/SoCXin/MM32x0) 系列包括多种型号
 
+* [MM32F031](https://github.com/SoCXin/MM32F031)
+* [MM32F032](https://github.com/SoCXin/MM32F032)
+* [MM32L06](https://github.com/SoCXin/MM32L06)
+* [MM32SPIN05](https://github.com/SoCXin/MM32SPIN05)
 
-##  [SoC资源平台](http://www.qitas.cn)
+###  [SoC芯平台](http://www.SoC.Xin)
