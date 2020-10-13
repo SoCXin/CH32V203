@@ -102,7 +102,7 @@ extern "C" {
 #endif
 
 /* transfer Baud rate define , 9600 or 115200  */
-#define IAP_BAUD   115200  
+#define IAP_BAUD   9600  
 #define APPLICATION_ADDRESS     (uint32_t)0x8001400
 /* The parameter arrangement is :
 UpgradeReqFlag + AppExsitFlag + AppBinCheck + UpBaud + бнбн
