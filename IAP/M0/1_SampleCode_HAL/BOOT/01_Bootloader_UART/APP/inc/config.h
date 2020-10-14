@@ -88,7 +88,8 @@ extern "C" {
 //#define BINARY_EN
 //#define ASCII_EN
 */
-#define XMODEM_EN    /* transfer protocol define */
+
+#define XMODEM1K_EN    /* transfer protocol define */
 
 #if defined (XMODEM_EN) || defined (XMODEM1K_EN)
 #include "xmodem.h"
@@ -103,14 +104,16 @@ extern "C" {
 #endif
 
 /* transfer Baud rate define , 9600 or 115200  */
-#define IAP_BAUD   9600
-#define APPLICATION_ADDRESS     (uint32_t)0x8001400
+#define IAP_BAUD                115200
+
 /* The parameter arrangement is :
 UpgradeReqFlag + AppExsitFlag + AppBinCheck + UpBaud + бнбн
 Note: Each parameter takes only one byte!
 */
-#define PARA_ADDRESS     (uint32_t)0x8001000
-#define PARA_SIZE     (12)
+
+#define PARA_ADDRESS            (uint32_t)0x8001000
+#define PARA_SIZE               (12)
+#define APPLICATION_ADDRESS     (uint32_t)0x8001400
 
 #define CHECKAPP_EN  0 /* Default is 0, no check for the app data */
 #define DEBUG_EN  0 /* Default is 0, no putout log */

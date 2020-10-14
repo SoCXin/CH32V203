@@ -106,7 +106,7 @@ static void App_Default_Entry(void)
             RxOverFlag = 0 ;
             if(RxBuff[0])
             {
-                printf("PARA received over £¡\r\n");
+                printf("PARA received over\r\n");
                 /* Write the IAP parameters to the PARA_ADDRESS  */
                 Iap_WriteAppBin(PARA_ADDRESS,RxBuff,PARA_SIZE) ;
                 SysTick_DelayMs(100);
