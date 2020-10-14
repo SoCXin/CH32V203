@@ -60,7 +60,7 @@ __IO uint32_t JumpAddress;
 static RCC_ClocksTypeDef get_rcc_clock;  /* Get system clock status */
 #ifndef  MM32F003_Q
 #ifndef USE_IAR
-const uint8_t ConstData[13*1011] __attribute__((at(0x8001800))) = {0x55} ; 
+const uint8_t ConstData[13*1011] __attribute__((at(0x8001800))) = {0x55} ;
 #else
 const uint8_t ConstData[1]                                               \
     __attribute__((section(".ARM.__at_0x8001800"))) = {0x55} ;
@@ -80,7 +80,7 @@ static ParaBlock IAPParaBlock_s =
     0,      /* Whether or not there is request of upgrading  0:NO ; 1:YES */
     1,      /* Whether or not there is APP   0:NO ; 1:YES  */
     0,      /* AppBinCheckSUM : Cumulative sum */
-    1,      /* UART_BAUD  0: 9600 ; 1: 115200 */    
+    1,      /* UART_BAUD  0: 9600 ; 1: 115200 */
 };
 
 #endif
@@ -94,42 +94,42 @@ static ParaBlock IAPParaBlock_s =
  * @attention  None
 ******************************************************************************/
 static void App_Default_Entry(void)
-{   
-    #ifdef ASCII_EN 
+{
+    #ifdef ASCII_EN
     static uint32_t DelayCount = 10000;
     #endif
-    while (1)            
+    while (1)
     {
-        #ifndef ASCII_EN 
+        #ifndef ASCII_EN
         if(RxOverFlag)
         {  /* Test data is :  55 01 00 4B 01 88 99 AA BB CC FF */
             RxOverFlag = 0 ;
             if(RxBuff[0])
-            {                               
+            {
                 printf("PARA received over £¡\r\n");
-                /* Write the IAP parameters to the PARA_ADDRESS  */            
+                /* Write the IAP parameters to the PARA_ADDRESS  */
                 Iap_WriteAppBin(PARA_ADDRESS,RxBuff,PARA_SIZE) ;
-                SysTick_DelayMs(100); 
-                DISABLE_INT_USER() ;   
-                /* __disable_irq(); */                                 
-                NVIC_SystemReset() ;/* Reset then jump into the Bootloader */              
+                SysTick_DelayMs(100);
+                DISABLE_INT_USER() ;
+                /* __disable_irq(); */
+                NVIC_SystemReset() ;/* Reset then jump into the Bootloader */
                 /* In addition ,jumping into the Bootloader Directly */
-                /* Need disable all interrupt before this operation */               
-                /* Iap_JumpToAddress(FLASH_BASE_ADDR) ;  */            
+                /* Need disable all interrupt before this operation */
+                /* Iap_JumpToAddress(FLASH_BASE_ADDR) ;  */
             }
         }
-        
+
 		if(ConstData[0])
 		{
 			LED1_TOGGLE();
 		}
-        LED3_TOGGLE();      
-        SysTick_DelayMs(900); 
+        LED3_TOGGLE();
+        SysTick_DelayMs(900);
         #else
         LED3_TOGGLE();
         while(DelayCount--)  __NOP;
-        DelayCount = 10000;        
-        #endif        
+        DelayCount = 10000;
+        #endif
     }
 }
 
@@ -157,50 +157,50 @@ NVIC_TABLE_t tNVIC_Table __attribute__((section(".ARM.__at_0x20000000")));
 int main(void)
 {
     int32_t status;
-    
+
    /* __enable_irq() ; */  /* If use __disable_irq() before jumping App */
     /* Init SysTick timer 1ms for SysTick_DelayMs */
     SysTick_Init(1000);
-    
+
     /* Config IAP_UART with parameter(IAP_BAUD, N, 8, 1) for printf */
     UARTx_Configure( IAP_UART, IAP_BAUD) ;
 
     /* Init Test TIM1 */
     TIM1_Configure(1000-1,SystemCoreClock / 1000 -1 );
-    
+
     /* Init LEDs GPIO */
-    BSP_LED_Init();	
-	
-    #ifndef ASCII_EN 
-		RCC_GetClocksFreq(&get_rcc_clock);
-    printf("\r\n====== MM32 M0 IAP UART DEMO =====\r\n");
+    BSP_LED_Init();
+
+    #ifndef ASCII_EN
+    RCC_GetClocksFreq(&get_rcc_clock);
+    printf("\r\n=== MM32 M0 IAP UART DEMO ===\r\n");
     printf("SystemCoreClock = %d\r\n", SystemCoreClock);
     printf("SYSCLK_Frequency = %d\r\n", get_rcc_clock.SYSCLK_Frequency);
     printf("HCLK_Frequency = %d\r\n", get_rcc_clock.HCLK_Frequency);
     printf("PCLK1_Frequency = %d\r\n", get_rcc_clock.PCLK1_Frequency);
     printf("PCLK2_Frequency = %d\r\n", get_rcc_clock.PCLK2_Frequency);
-    
-    
+
+
     if(NeedProtect)
     {
         /* Check the Read Protect */
         status = FLASH_CheckReadProtect();
-        if (status == 0) 
+        if (status == 0)
         { /* not protect */
             FLASH_Unlock();
             /* Need disable all interrupt before this operation*/
             status = FLASH_EnableReadProtect();/* Set the Read Protect */
             FLASH_Lock();
-            if (status == 0) 
+            if (status == 0)
             {
                 status = 3;
             }
         }
         else
         {
-            status = 3;     
+            status = 3;
         }
-        /*During debugging the program, you can shield the above operations and 
+        /*During debugging the program, you can shield the above operations and
             make status = 3 */
     }
     else
@@ -208,15 +208,15 @@ int main(void)
         status = 3 ;
     }
     /* Write the UpgradeReqFlag into the PARA_ADDRESS */
-    RxBuff[0] = IAPParaBlock_s.UpgradeReqFlag ;  
+    RxBuff[0] = IAPParaBlock_s.UpgradeReqFlag ;
     /* Write the AppExsitFlag into the PARA_ADDRESS */
-    RxBuff[1] = IAPParaBlock_s.AppExsitFlag ;  
+    RxBuff[1] = IAPParaBlock_s.AppExsitFlag ;
     Iap_WriteAppBin(PARA_ADDRESS,RxBuff,PARA_SIZE) ;
     #else
     status = 3 ;
     #endif
-    
-    if (status == 3) 
+
+    if (status == 3)
     { /* success */
         /* App default entrance */
         App_Default_Entry();

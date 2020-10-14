@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -43,30 +43,30 @@ extern "C" {
 
 //#define ASCII_EN    /* transfer protocol define */
 
-#define IAP_BAUD    9600  /* transfer Baud rate define , 9600 or 115200  */
-
+#define IAP_BAUD                9600    /* transfer Baud rate define , 9600 or 115200  */
 #define APPLICATION_ADDRESS     (uint32_t)0x8001400
-#define PARA_ADDRESS     (uint32_t)0x8001000 
-#define PARA_SIZE     (12) 
+#define PARA_ADDRESS            (uint32_t)0x8001000
+#define PARA_SIZE               (12)
+
 /* The parameter arrangement is :
 UpgradeReqFlag + AppExsitFlag + AppBinCheck + UpBaud + бнбн
 Note: Each parameter takes only one byte!
 */
-#ifdef  MM32F003_Q 
+#ifdef  MM32F003_Q
 #define IAP_UART  UART2   /* Used for IAP */
 #define DEBUG_EN
 #ifdef DEBUG_EN
 #define DEBUG_UART  UART2   /* Used for printf */
 #endif
-  
+
 #else
-  
+
 #define IAP_UART  UART1   /* Used for IAP */
 #define DEBUG_EN
 #ifdef DEBUG_EN
 #define DEBUG_UART  UART1   /* Used for printf */
 #endif
-  
+
 #endif
 
 
