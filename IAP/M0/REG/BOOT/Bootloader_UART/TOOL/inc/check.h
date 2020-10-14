@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -60,5 +60,5 @@ EXTERN uint32_t Str2Int(uint8_t *inputstr, int32_t *intnum);
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

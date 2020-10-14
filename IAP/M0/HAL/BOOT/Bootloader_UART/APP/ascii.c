@@ -119,13 +119,13 @@ static fsm_rt_t Received_App(void)
         }
         break;
     case DELAY:
-        if (-- s_tReceived.chDelay < 1) 
+        if (-- s_tReceived.chDelay < 1)
         {  /* Delay waiting for reception to complete */
             s_tReceived.tState = REC_COMPLETE;
         }
         break;
     case REC_COMPLETE:
-        if (s_tReceived.hwLastCount == UartRxCnt)   
+        if (s_tReceived.hwLastCount == UartRxCnt)
         {  /* Receive data finished */
             APP_RECEIVED_FSM_RESET();
             s_tAppControlBlock.hwAppLenth = UartRxCnt;
@@ -158,9 +158,9 @@ static void IAP_UART_Processing(void)
 {
     uint8_t ResByte;
     if (UART_GetFlagStatus(IAP_UART, UART_FLAG_RXAVL) != RESET)
-    {      
+    {
         UART_ClearITPendingBit(IAP_UART,UART_IT_RXIEN);
-        ResByte = (uint8_t)(UART_ReceiveData(IAP_UART) & (uint8_t)0xFF);   
+        ResByte = (uint8_t)(UART_ReceiveData(IAP_UART) & (uint8_t)0xFF);
         if (UartRxCnt < UART_REC_LEN) {
             UartRxBuf[UartRxCnt] = ResByte;
             UartRxCnt++;
@@ -180,10 +180,10 @@ static void IAP_UART_Processing(void)
 static uint8_t ProgramHexToFlash(uint8_t *pHexData, uint32_t AddrSelect,      \
     volatile uint32_t UserAddr)
 {
-    volatile uint8_t    ErrorCode = 0; 
+    volatile uint8_t    ErrorCode = 0;
     t_HexLineInfo   HexDataInfo;
     /* Judge whether all data has been parsed and stored in the cache flag */
-    uint8_t CanGetData = TRUE; 
+    uint8_t CanGetData = TRUE;
     uint32_t    HexDataIndexTemp = 0;
     uint32_t    HexDataTempIndexTemp = 0;
     uint32_t    i = 0;
@@ -191,8 +191,8 @@ static uint8_t ProgramHexToFlash(uint8_t *pHexData, uint32_t AddrSelect,      \
     volatile uint32_t   FirstAddr = 0;
     volatile uint8_t    HaveGetAddrFlag = FALSE;
     volatile uint32_t   Sector = 0;
-    
-    for (i = 0; i < BUFFER_SIZE; i++) 
+
+    for (i = 0; i < BUFFER_SIZE; i++)
     {  /* Initialize the data buffer that needs to be written to flash */
         ProgramFlashDataTemp[i] = 0xFF;
     }
@@ -201,7 +201,7 @@ static uint8_t ProgramHexToFlash(uint8_t *pHexData, uint32_t AddrSelect,      \
     while (CanGetData == TRUE)
     {
         /* Get hex data information */
-        ErrorCode = GetHexLineInfo(pHexData + HexDataIndexTemp, &HexDataInfo); 
+        ErrorCode = GetHexLineInfo(pHexData + HexDataIndexTemp, &HexDataInfo);
         if ((HaveGetAddrFlag == FALSE) && (HexDataInfo.Rectype == RCD_DATA))
         {
             FirstAddr = HexDataInfo.OffsetAddr;
@@ -214,10 +214,10 @@ static uint8_t ProgramHexToFlash(uint8_t *pHexData, uint32_t AddrSelect,      \
             {
           /* Put the hex data out and store it in the hexdatatemp data buffer */
                 ErrorCode = GetHexData(&HexDataInfo, ProgramFlashDataTemp +   \
-                    HexDataTempIndexTemp); 
+                    HexDataTempIndexTemp);
                 HexDataTempIndexTemp += HexDataInfo.DataLength;
             }
-            else if (HexDataInfo.Rectype == RCD_END_FILE) 
+            else if (HexDataInfo.Rectype == RCD_END_FILE)
             {  /* Jump out of loop at end of received file */
                 CanGetData = FALSE;
             }
@@ -246,19 +246,19 @@ static uint8_t ProgramHexToFlash(uint8_t *pHexData, uint32_t AddrSelect,      \
         {
             CanGetData = FALSE;
         }
-        if (pHexData[HexDataIndexTemp] != ':') 
+        if (pHexData[HexDataIndexTemp] != ':')
         {  /* Judge whether the received data has been processed */
             CanGetData = FALSE;
         }
     }
     /*Write the buffer data to flash*/
-    if ((ErrorCode == RIGHT) && (AddrSelect == USE_USER_DEFINED_ADDR)) 
+    if ((ErrorCode == RIGHT) && (AddrSelect == USE_USER_DEFINED_ADDR))
     {/*The data is correct and the data is written with the specified address*/
         DST = (HexAddrBase << 16) + (FirstAddr + UserAddr);
         ErrorCode = ProgramDatatoFlash(&DST, (uint16_t *)ProgramFlashDataTemp, \
             BUFFER_SIZE);
     }
-    else if ((ErrorCode == RIGHT) && (AddrSelect == USE_DFT_ADDR)) 
+    else if ((ErrorCode == RIGHT) && (AddrSelect == USE_DFT_ADDR))
     {/*The data is correct and the address in hex file data                   \
         is used to write the data */
         DST = (HexAddrBase << 16) + FirstAddr;
@@ -325,12 +325,12 @@ uint8_t GetHexLineInfo(uint8_t *pHexData, t_HexLineInfo *pHexDataInfo)
     if ((pHexData != NULL) && (pHexDataInfo != NULL))
     {
         /* Determine whether the data starts with ':' */
-        if ((*pHexData) != ':')  
+        if ((*pHexData) != ':')
         {
             ErrorCode = 1;
             return ErrorCode;
         }
-        else 
+        else
         {  /* Judge whether the data verification is correct */
             for (i = 0; i < (AsciiToDec(pHexData + 1) << 4) +                 \
                 AsciiToDec(pHexData + 2) + 4; i++)
@@ -342,7 +342,7 @@ uint8_t GetHexLineInfo(uint8_t *pHexData, t_HexLineInfo *pHexDataInfo)
         }
         pHexDataInfo->SumCheckOk = FALSE;
         if (cc == (AsciiToDec(pHexData + i * 2 + 1) << 4) +                   \
-            AsciiToDec(pHexData + i * 2 + 2)) 
+            AsciiToDec(pHexData + i * 2 + 2))
         {  /* Data verification is correct */
             switch (*(pHexData + 8))
             {
@@ -385,7 +385,7 @@ uint8_t GetHexLineInfo(uint8_t *pHexData, t_HexLineInfo *pHexDataInfo)
                 pHexDataInfo->Rectype = *(pHexData + 8);
                 pHexDataInfo->DataLength = (AsciiToDec(pHexData + 1) << 4) +  \
             AsciiToDec(pHexData + 2);
-                
+
                 pHexDataInfo->AddrBase = (AsciiToDec(pHexData + 9) << 12) +   \
                     (AsciiToDec(pHexData + 10) << 8) +
                     (AsciiToDec(pHexData + 11) << 4) +                        \
@@ -472,12 +472,12 @@ uint8_t GetHexData(t_HexLineInfo *pHexDataInfo, uint8_t *pHexData)
  * @attention  None
 ******************************************************************************/
 int32_t Ascii_Receive (void)
-{   
-    static int8_t TempResult = 1;	
+{
+    static int8_t TempResult = 1;
     /* Calculation needs to erase pages (actual number of pages - 1) */
-	uint8_t chEraseNumber = wAppSize / FLASH_PAGE_SIZE ;   
+	uint8_t chEraseNumber = wAppSize / FLASH_PAGE_SIZE ;
 	NVIC_InitTypeDef NVIC_InitStruct;
-    
+
 	/* Enable the UART_IT interrupt */
     UART_ITConfig(IAP_UART,UART_IT_RXIEN,ENABLE);
 	if(IAP_UART == UART1)
@@ -493,7 +493,7 @@ int32_t Ascii_Receive (void)
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_InitStruct.NVIC_IRQChannelPriority = 1;
 	NVIC_Init(& NVIC_InitStruct);
-  
+
 	FLASH_Unlock();
     do
     {
@@ -508,21 +508,21 @@ int32_t Ascii_Receive (void)
     while (1);
     FLASH_Lock();
     SerialPutString(IAP_UART, "Waiting for user application!\r\n");
-    
+
     while(1)
-	{		
-		if (fsm_rt_cpl == Received_App()) 
+	{
+		if (fsm_rt_cpl == Received_App())
 		{ /* Check whether the app has been received */
 
             ProgramHexToFlash(UartRxBuf, USE_DFT_ADDR, APPLICATION_ADDRESS);
             TempResult = 0 ;
-			break ;    
+			break ;
 		}
 	}
-    
+
   return TempResult;
 }
 
 #endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/

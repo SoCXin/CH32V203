@@ -48,7 +48,7 @@
  * @attention  This is the actual TIM1_UP interrupt processing entry
 ******************************************************************************/
 void TIM1_Processing(void)
-{	
+{
     if ((TIM_GetITStatus(TIM1,TIM_IT_Update)) != RESET)
     {
         /* Clear the IT pending Bit */
@@ -62,23 +62,23 @@ void TIM1_Processing(void)
  * @param  None
  * @retval  None
  * @attention  None
- *              
+ *
 ******************************************************************************/
 void TIM1_Configure(uint16_t hwPrescaler, uint16_t hwPeriod)
 {
     NVIC_InitTypeDef  NVIC_InitStructure;
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-    
+
     /* TIM1clock enable */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); 
-    
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+
     tNVIC_Table.pTIM1_BRK_UP_TRG_COM_IRQHandler = TIM1_Processing;
 
     NVIC_InitStructure.NVIC_IRQChannel = TIM1_BRK_UP_TRG_COM_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
-     
+
     TIM_DeInit(TIM1);
     TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
     TIM_TimeBaseStructure.TIM_Period = hwPeriod;
@@ -90,13 +90,13 @@ void TIM1_Configure(uint16_t hwPrescaler, uint16_t hwPeriod)
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
     /* Clear TIM1 update pending flag */
-    TIM_ClearFlag(TIM1, TIM_FLAG_Update);      
+    TIM_ClearFlag(TIM1, TIM_FLAG_Update);
     /* Enable the Interrupt sources */
     TIM_ITConfig(TIM1,TIM_IT_Update,ENABLE);
     TIM_SetCounter(TIM1,0);  /* Clear the TIM1 counter */
-    TIM_Cmd(TIM1,ENABLE);  /* Enable the TIM1 Counter */   
+    TIM_Cmd(TIM1,ENABLE);  /* Enable the TIM1 Counter */
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

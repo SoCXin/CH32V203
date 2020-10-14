@@ -61,24 +61,24 @@ void TIM3_Processing(void)
  * @brief  Initialize timeout receive timer
  * @param  None
  * @retval  None
- * @attention  The timer can prevent the receiving state machine from having 
+ * @attention  The timer can prevent the receiving state machine from having
  *              an error state when the frame data is received incorrectly
 ******************************************************************************/
 void TIM3_Configure(void)
 {
     NVIC_InitTypeDef  NVIC_InitStructure;
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-    
+
     /* TIM3clock enable */
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); 
-    
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+
     tNVIC_Table.pTIM3_IRQHandler = TIM3_Processing;
 
     NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
-    
+
     TIM_DeInit(TIM3);
     TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
     TIM_TimeBaseStructure.TIM_Period = 100;
@@ -90,7 +90,7 @@ void TIM3_Configure(void)
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
     /* Clear TIM3 update pending flag */
-    TIM_ClearFlag(TIM3, TIM_FLAG_Update);      
+    TIM_ClearFlag(TIM3, TIM_FLAG_Update);
     /* Enable the Interrupt sources */
     TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
     TIM_SetCounter(TIM3,0);  /* Clear the tim3 counter */
@@ -98,5 +98,5 @@ void TIM3_Configure(void)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

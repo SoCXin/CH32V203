@@ -4,16 +4,6 @@
  * @version V1.00
  * @date    10-June-2020
  * @brief   ......
- ******************************************************************************
- *  @attention
- * 
- *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
- *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
- *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- *  CONSEQUENTIAL DAMAGES ABOUT ANY CLAIMS ARISING OUT OF THE CONTENT OF SUCH
- *  HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
- *  CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
- *  <H2><CENTER>&COPY; COPYRIGHT 2020 MINDMOTION </CENTER></H2>
 ******************************************************************************/
 
 
@@ -83,12 +73,14 @@ extern "C" {
 /* Warning: Only one transfer protocol definition below can be selected! */
 /*
 //#define XMODEM_EN
-//#define XMODEM1K_EN    
-//#define YMODEM_EN    
-//#define BINARY_EN    
-//#define ASCII_EN    
+//#define XMODEM1K_EN
+//#define YMODEM_EN
+//#define BINARY_EN
+//#define ASCII_EN
 */
+
 #define XMODEM_EN    /* transfer protocol define */
+
 #if defined (XMODEM_EN) || defined (XMODEM1K_EN)
 #include "xmodem.h"
 #elif defined (YMODEM_EN)  || defined (YMODEM1K_EN)
@@ -97,26 +89,27 @@ extern "C" {
 #include "binary.h"
 #elif defined (ASCII_EN)
 #include "ascii.h"
-#else	
+#else
 
 #endif
 
 /* transfer Baud rate define , 9600 or 115200  */
-#define IAP_BAUD   9600  
+#define IAP_BAUD                9600
 #define APPLICATION_ADDRESS     (uint32_t)0x8001400
 /* The parameter arrangement is :
 UpgradeReqFlag + AppExsitFlag + AppBinCheck + UpBaud + бнбн
 Note: Each parameter takes only one byte!
 */
-#define PARA_ADDRESS     (uint32_t)0x8001000 
-#define PARA_SIZE     (12) 
+#define PARA_ADDRESS            (uint32_t)0x8001000
+#define PARA_SIZE               (12)
 
-#define CHECKAPP_EN  0 /* Default is 0, no check for the app data */
-#define DEBUG_EN  0 /* Default is 0, no putout log */
+#define CHECKAPP_EN         0       /* Default is 0, no check for the app data */
+#define DEBUG_EN            1       /* Default is 0, no putout log */
+
 /* Default is 0, Ex factory burning does not need to merge hex */
-#define MERGE_HEX_EN 0  
+#define MERGE_HEX_EN        0
 
-#ifdef  MM32F003_Q 
+#ifdef  MM32F003_Q
 #define IAP_UART  UART2   /* Used for IAP */
 
 #define PRINTF_EN
@@ -131,9 +124,6 @@ Note: Each parameter takes only one byte!
 #endif
 #endif
 
-
-/* Exported macro -----------------------------------------------------------*/
-
 #ifdef __cplusplus
 }
 #endif
@@ -142,5 +132,5 @@ Note: Each parameter takes only one byte!
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

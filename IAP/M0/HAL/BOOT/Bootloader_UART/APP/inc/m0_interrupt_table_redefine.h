@@ -453,7 +453,7 @@ typedef struct
     void (*pCAN_IRQHandler)(void);
     void (*pUSB_IRQHandler)(void);
 }NVIC_TABLE_t;
-#else 
+#else
 /*  */
 #endif
 
@@ -471,5 +471,5 @@ EXTERN NVIC_TABLE_t tNVIC_Table ;
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

@@ -53,15 +53,15 @@
 * @{
 */
 /* FLASH Busy flag */
-#define FLASH_FLAG_BSY           ((uint32_t)0x00000001)  
+#define FLASH_FLAG_BSY           ((uint32_t)0x00000001)
 /* FLASH End of Operation flag */
-#define FLASH_FLAG_EOP           ((uint32_t)0x00000020)  
+#define FLASH_FLAG_EOP           ((uint32_t)0x00000020)
 /* FLASH Program error flag */
-#define FLASH_FLAG_PGERR         ((uint32_t)0x00000004)  
+#define FLASH_FLAG_PGERR         ((uint32_t)0x00000004)
 /* FLASH Write protected error flag */
-#define FLASH_FLAG_WRPRTERR      ((uint32_t)0x00000010)  
+#define FLASH_FLAG_WRPRTERR      ((uint32_t)0x00000010)
 /* FLASH Option Byte error flag */
-#define FLASH_FLAG_OPTERR        ((uint32_t)0x00000001)  
+#define FLASH_FLAG_OPTERR        ((uint32_t)0x00000001)
 
 /* Private macro ------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
@@ -148,7 +148,7 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer,      \
     uint16_t hwNumber)
 {
     uint16_t i;
-    
+
     if (NULL == phwBuffer)
     {
         return;
@@ -176,7 +176,7 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer,      \
 FLASH_Status FLASH_ProgramHalfWord(uint32_t Address, uint16_t Data)
 {
     FLASH_Status status = FLASH_COMPLETE;
-    
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOperation(ProgramTimeout);
 
@@ -203,36 +203,36 @@ FLASH_Status FLASH_ProgramHalfWord(uint32_t Address, uint16_t Data)
 * @brief  Programs a word at a specified address.
 * @param Address: specifies the address to be programmed.
 * @param Data: specifies the data to be programmed.
-* @retval : FLASH Status: The returned value can be: FLASH_BUSY, 
-*   FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
-*   FLASH_TIMEOUT. 
+* @retval : FLASH Status: The returned value can be: FLASH_BUSY,
+*   FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or
+*   FLASH_TIMEOUT.
 */
 FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
 {
     FLASH_Status status = FLASH_COMPLETE;
-    
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOperation(ProgramTimeout);
-    
+
     if(status == FLASH_COMPLETE)
     {
-     /* if the previous operation is completed, proceed to program the new first 
+     /* if the previous operation is completed, proceed to program the new first
         half word */
         FLASH->CR |= CR_PG_Set;
-        
+
         *(__IO uint16_t*)Address = (uint16_t)Data;
         /* Wait for last operation to be completed */
         status = FLASH_WaitForLastOperation(ProgramTimeout);
-        
+
         if(status == FLASH_COMPLETE)
         {
-   /* if the previous operation is completed, proceed to program the new second 
+   /* if the previous operation is completed, proceed to program the new second
             half word */
             *(__IO uint16_t*)(Address + 2) = Data >> 16;
-            
+
             /* Wait for last operation to be completed */
             status = FLASH_WaitForLastOperation(ProgramTimeout);
-            
+
             if(status != FLASH_BUSY)
             {
                 /* Disable the PG Bit */
@@ -248,8 +248,8 @@ FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
             }
         }
     }
-    
-    
+
+
     /* Return the Program Status */
     return status;
 }
@@ -290,7 +290,7 @@ void FLASH_Lock(void)
 FLASH_Status FLASH_ErasePage(uint32_t Page_Address)
 {
     FLASH_Status status = FLASH_COMPLETE;
-    
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOperation(EraseTimeout);
 
@@ -467,7 +467,7 @@ FLASH_Status ProgramDatatoFlash(uint32_t *Address, uint16_t *Data,            \
     }
     return  FLASHStatus;
 
-} 
+}
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

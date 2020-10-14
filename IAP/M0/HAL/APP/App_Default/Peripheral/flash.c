@@ -59,7 +59,7 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer,      \
 
 /******************************************************************************
  * @brief  This function is check the read protect status.
- * @param  None 
+ * @param  None
  * @retval None
  * @attention  None
 ******************************************************************************/
@@ -69,18 +69,18 @@ uint32_t FLASH_CheckReadProtect(void)
     uint16_t data1;
     uint32_t i = 0;
 
-    if ((FLASH->OBR & 0x02) != (u32)RESET) 
+    if ((FLASH->OBR & 0x02) != (u32)RESET)
     {
         /* Read Protect on 0x1FFFF800 is set */
         protectstatus = 1;
     }
-    else 
+    else
     {
-        for (i = 0; i < 8; i++) 
+        for (i = 0; i < 8; i++)
         {
             /* Address must be an integer multiple of 2 */
-            data1 = *(uint16_t*)(0x1ffe0000 + i * 2);  
-            if (data1 != 0xFFFF) 
+            data1 = *(uint16_t*)(0x1ffe0000 + i * 2);
+            if (data1 != 0xFFFF)
             {
                 protectstatus = 2;
                 break;
@@ -92,7 +92,7 @@ uint32_t FLASH_CheckReadProtect(void)
 
 /******************************************************************************
  * @brief  This function is portect Full main Flash enable.
- * @param  None 
+ * @param  None
  * @retval ret
  * @attention  None
 ******************************************************************************/
@@ -228,5 +228,5 @@ uint32_t FLASH_If_Write(__IO uint32_t *FlashAddress, uint32_t *Data,           \
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

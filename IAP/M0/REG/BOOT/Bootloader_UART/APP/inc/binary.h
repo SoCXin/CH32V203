@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -45,11 +45,11 @@ extern "C" {
 /* Exported macro ---------------------------------------------*/
 /* Exported constants -------------------------------------------------------*/
 
-#define SET     true        
-#define RESET   false       
-#define AUTO    true        
-#define MANUAL  false       
-    
+#define SET     true
+#define RESET   false
+#define AUTO    true
+#define MANUAL  false
+
 /* Exported typedef -------------------------------------------------------*/
 
 //! \name finit state machine state
@@ -63,7 +63,7 @@ typedef enum {
 
 typedef struct {
     bool bAutoReset;    //  reset type
-    bool bIsSet;        //  initial state 
+    bool bIsSet;        //  initial state
 } event_t;
 
 
@@ -76,7 +76,7 @@ EXTERN int32_t Binary_Receive (void);
 }
 #endif
 
-#endif 
+#endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

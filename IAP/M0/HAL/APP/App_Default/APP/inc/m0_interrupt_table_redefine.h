@@ -451,7 +451,7 @@ typedef struct
     void (*pCAN_IRQHandler)(void);
     void (*pUSB_IRQHandler)(void);
 }NVIC_TABLE_t;
-#else 
+#else
 /*   中断处理函数指针表，在中断服务函数中调用函数指针   */
 #endif
 
@@ -469,5 +469,5 @@ EXTERN NVIC_TABLE_t tNVIC_Table ;
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

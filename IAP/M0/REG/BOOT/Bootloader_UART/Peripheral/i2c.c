@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -41,7 +41,7 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer, uint16
     for (i = 0; i < hwNumber; i++) {
         FLASH_ProgramHalfWord(wWriteAddr, phwBuffer[i]);
         wWriteAddr += 2;                                    //地址增加2.
-    } 
+    }
 }
 
 
@@ -50,10 +50,10 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer, uint16
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 //应用程序代码写入
 //wAppxAddr:应用程序的起始地址
@@ -77,10 +77,10 @@ void Iap_WriteAppBin(uint32_t wAppxAddr, uint8_t *pchAppBuf, uint32_t wAppSize)
 }
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void I2C_ReleaseBus(void)
 {
@@ -99,10 +99,10 @@ void I2C_ReleaseBus(void)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void I2C_Configure(uint8_t Addr)
 {
@@ -129,15 +129,15 @@ void I2C_Configure(uint8_t Addr)
     I2C_Cmd(I2C1, ENABLE);
 
     /* Configure I2C1 GPIO */
-    I2C_GPIO_Configure();  
+    I2C_GPIO_Configure();
 }
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void I2C_ReadBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 {
@@ -179,10 +179,10 @@ void I2C_ReadBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void I2C_WriteBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 {
@@ -205,5 +205,5 @@ void I2C_WriteBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

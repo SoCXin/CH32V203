@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  * @attention
- * 
+ *
  * THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  * CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  * TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -45,10 +45,10 @@ extern uint32_t SystemCoreClock;
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void SysTick_Init(uint32_t ticks)
 {
@@ -58,15 +58,15 @@ void SysTick_Init(uint32_t ticks)
         while(1);
     }
 
-    NVIC_SetPriority(SysTick_IRQn, 0);    
+    NVIC_SetPriority(SysTick_IRQn, 0);
 }
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void SysTick_Handler(void)
 {
@@ -78,10 +78,10 @@ void SysTick_Handler(void)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void SysTick_DelayMs(uint32_t ms)
 {
@@ -90,5 +90,5 @@ void SysTick_DelayMs(uint32_t ms)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

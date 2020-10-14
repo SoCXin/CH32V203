@@ -4,16 +4,6 @@
  * @version V1.01
  * @date    24-June-2020
  * @brief   ......
- ******************************************************************************
- *  @attention
- *
- *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
- *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
- *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- *  CONSEQUENTIAL DAMAGES ABOUT ANY CLAIMS ARISING OUT OF THE CONTENT OF SUCH
- *  HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
- *  CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
- *  <H2><CENTER>&COPY; COPYRIGHT 2020 MINDMOTION </CENTER></H2>
 ******************************************************************************/
 
 
@@ -98,17 +88,17 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
     uint8_t TempCRC = 1;  /* Use CRC check */
     uint8_t PacketNO = 1;
     uint8_t PacketNoTimes = 0;
-    uint32_t PageOffset = 0 ;  
+    uint32_t PageOffset = 0 ;
 /*  uint8_t ErrorCode = 0;  */
     uint8_t *pLastData;
     uint8_t chTemp = 0;  /* Char rx buffer */
     uint8_t ucIsLastPac = 0 ;
     uint16_t i = 0;
     uint16_t j = 0;
-    
+
     pLastData = BinDataTemp;
-    
-    if (CheckType == CHECK_CRC) 
+
+    if (CheckType == CHECK_CRC)
     {
         TempCRC = 1;
         CheckTypeTemp = 'C';
@@ -120,10 +110,10 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
     }
     while (1)
     {
-        SerialPutString(IAP_UART, "\n\r->");        
-        for (i = CONNECT_TIMES; i != 0; i--) 
+        SerialPutString(IAP_UART, "\n\r->");
+        for (i = CONNECT_TIMES; i != 0; i--)
         {  /*   500 * 0.5ms  */
-            chTemp = UARTx_ReadByte(IAP_UART, DLY_1S * 2);  
+            chTemp = UARTx_ReadByte(IAP_UART, DLY_1S * 2);
             if (chTemp > 0)
             {
                 TIM3->CR1 &= ((uint16_t)0xFFFE);  /* Disable the TIM Counter */
@@ -158,7 +148,7 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
             #endif
             return USER_CANCELED;
         }
-        else  
+        else
         {  /* Start file transfer */
 #if defined (XMODEM_EN)
             while (chTemp == SOH)  /* Valid data frame header received */
@@ -167,20 +157,20 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
 #endif
             {
                 XmodemBuff[0] = chTemp;
-                for (i = 0; i < sizeof(XmodemBuff); i++)  
+                for (i = 0; i < sizeof(XmodemBuff); i++)
                 {  /* Received one frame of data */
-                    XmodemBuff[i + 1] = UARTx_ReadByte(IAP_UART, DLY_1MS);  
+                    XmodemBuff[i + 1] = UARTx_ReadByte(IAP_UART, DLY_1MS);
                 }
 
                 if ((XmodemBuff[1] == (uint8_t)~XmodemBuff[2]) && (PacketNO == \
-                    XmodemBuff[1]) 
-                        && (Packet_Check(TempCRC, &XmodemBuff[3], BufLen)))  
-                {  /* Package No. and CRC is correct */ 
-                    
+                    XmodemBuff[1])
+                        && (Packet_Check(TempCRC, &XmodemBuff[3], BufLen)))
+                {  /* Package No. and CRC is correct */
+
                     if (FLASHStatus == FLASH_COMPLETE)
                     {
 #if defined (XMODEM_EN)
-                        if ((PacketNO - 1) % 8 == 0) 
+                        if ((PacketNO - 1) % 8 == 0)
 #elif defined (XMODEM1K_EN)
                         if ((PacketNO - 1) % 1 == 0) //8
 #endif
@@ -191,8 +181,8 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
                             FLASH_Lock();
                             EraseCounter++;
                         }
-                    }                  
-                    if(255 == PacketNO)  
+                    }
+                    if(255 == PacketNO)
                     {
                         PacketNoTimes +=1 ;
                     }
@@ -207,12 +197,12 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
                             FillingDataCount = (3 + j) ;
                             ucIsLastPac = 1 ;
                             break;
-                        }                        
+                        }
                     }
                     if (ucIsLastPac)
                     {
                         Iap_WriteAppBin((APPLICATION_ADDRESS + PageOffset *  \
-                        BufLen),  BinDataTemp,  FillingDataCount - 3) ; 
+                        BufLen),  BinDataTemp,  FillingDataCount - 3) ;
 //                        pLastData = BinDataTemp;
                         AppRxSize = ((PacketNO+256*PacketNoTimes) - 2)*BufLen+ \
                         FillingDataCount-3;
@@ -226,29 +216,29 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
                     }
                     UARTx_WriteByte(IAP_UART, ACK);
                 }
-                else 
+                else
                 {  /* Request resend */
                     UARTx_WriteByte(IAP_UART, NAK);
                 }
                 do
-                {                   
+                {
                     /* Read the frame header of the next frame data */
-                    chTemp = UARTx_ReadByte(IAP_UART, 10*DLY_1MS); 
+                    chTemp = UARTx_ReadByte(IAP_UART, 10*DLY_1MS);
                 }
                 while (chTemp == 0);
             }
             UARTx_WriteByte(IAP_UART, chTemp);
-            
-            if (chTemp == EOT)  
+
+            if (chTemp == EOT)
             {  /* File sending end flag */
                 UARTx_WriteByte(IAP_UART, ACK);
-                if(ucIsLastPac == 0)      
+                if(ucIsLastPac == 0)
                 {
                      AppRxSize = ((PacketNO+256*PacketNoTimes) - 2)*BufLen +  \
                         FillingDataCount-3;
-                }                    
+                }
             }
-            
+
             return SUCCESSFULL;
         }
     }
@@ -257,5 +247,5 @@ uint8_t Xmodem_Receive(uint8_t CheckType)
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

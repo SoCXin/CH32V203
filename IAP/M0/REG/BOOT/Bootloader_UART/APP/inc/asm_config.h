@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -24,13 +24,13 @@
 
 APPLICATION_ADDR  EQU  0x08001400
 
-APPADDR_NMI_Handler        EQU  APPLICATION_ADDR+0x08   
-APPADDR_HardFault_Handler  EQU  APPLICATION_ADDR+0x0C   
-APPADDR_SVC_Handler        EQU  APPLICATION_ADDR+0x2C   
-APPADDR_PendSV_Handler     EQU  APPLICATION_ADDR+0x38 
-APPADDR_SysTick_Handler    EQU  APPLICATION_ADDR+0x3C 
+APPADDR_NMI_Handler        EQU  APPLICATION_ADDR+0x08
+APPADDR_HardFault_Handler  EQU  APPLICATION_ADDR+0x0C
+APPADDR_SVC_Handler        EQU  APPLICATION_ADDR+0x2C
+APPADDR_PendSV_Handler     EQU  APPLICATION_ADDR+0x38
+APPADDR_SysTick_Handler    EQU  APPLICATION_ADDR+0x3C
 
 #endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

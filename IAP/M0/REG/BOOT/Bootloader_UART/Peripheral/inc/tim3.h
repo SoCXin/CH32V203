@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -48,7 +48,7 @@ extern "C" {
 /* Exported variables -------------------------------------------------------*/
 
 /* Time out flag for receiving data from serial port regularly */
-EXTERN volatile uint8_t g_recTimeOutFlag ; 
+EXTERN volatile uint8_t g_recTimeOutFlag ;
 
 /* Exported function prototypes ---------------------------------------------*/
 EXTERN void TIM3_Processing(void);
@@ -63,5 +63,5 @@ EXTERN void TIM3_Configure(void);
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

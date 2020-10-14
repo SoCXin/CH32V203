@@ -42,7 +42,7 @@ static void Flash_Write_NoCheck(uint32_t wWriteAddr, uint16_t *phwBuffer,      \
     uint16_t hwNumber)
 {
     uint16_t i;
-    
+
     if (NULL == phwBuffer)
     {
         return;
@@ -210,7 +210,7 @@ FLASH_Status ProgramDatatoFlash(uint32_t *Address, uint16_t *Data,            \
     }
     return  FLASHStatus;
 
-} 
+}
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

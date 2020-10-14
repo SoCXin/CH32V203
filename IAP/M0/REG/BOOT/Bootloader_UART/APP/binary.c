@@ -133,13 +133,13 @@ static fsm_rt_t Received_App(void)
         }
         break;
     case DELAY:
-        if (-- s_tReceived.chDelay < 1) 
+        if (-- s_tReceived.chDelay < 1)
         {  /* Delay waiting for reception to complete */
             s_tReceived.tState = REC_COMPLETE;
         }
         break;
     case REC_COMPLETE:
-        if (s_tReceived.hwLastCount == UartRxCnt)   
+        if (s_tReceived.hwLastCount == UartRxCnt)
         {  /* Receive data finished */
             APP_RECEIVED_FSM_RESET();
             s_tAppControlBlock.hwAppLenth = UartRxCnt;
@@ -188,7 +188,7 @@ static void IAP_UART_Processing(void)
 /* Exported function prototypes ---------------------------------------------*/
 extern void M0_NVIC_Init(uint32_t NVIC_IRQChannelPriority,                     \
     IRQn_Type NVIC_IRQChannel,FunctionalState NVIC_IRQChannelCmd) ;
-    
+
 /* Exported function ---------------------------------------------------------*/
 
 /******************************************************************************
@@ -198,7 +198,7 @@ extern void M0_NVIC_Init(uint32_t NVIC_IRQChannelPriority,                     \
  * @attention  None
 ******************************************************************************/
 int32_t Binary_Receive(void)
-{    
+{
     static int8_t TempResult = 1;
     /* Calculation needs to erase pages (actual number of pages - 1) */
     uint8_t chEraseNumber = wAppSize / FLASH_PAGE_SIZE ;
@@ -208,7 +208,7 @@ int32_t Binary_Receive(void)
 
     /* Enable the UART_IT interrupt */
     IAP_UART->IER  |= 0x0002;
-    #ifdef MM32F003_Q   
+    #ifdef MM32F003_Q
     if (IAP_UART == UART2)
     {
         M0_NVIC_Init( 1,  UART2_IRQn, ENABLE) ;
@@ -226,7 +226,7 @@ int32_t Binary_Receive(void)
         tNVIC_Table.pUART2_IRQHandler = IAP_UART_Processing;
     }
     #endif
-    
+
     FLASH_Unlock();
     do
     {
@@ -244,7 +244,7 @@ int32_t Binary_Receive(void)
     while (1)
     {
         /* Get queue data length */
-        RxLength = Queue_PacketLengthGet(&QueueUartRx);  
+        RxLength = Queue_PacketLengthGet(&QueueUartRx);
         if (fsm_rt_cpl == Received_App())
         {
             /* Check whether the app has been received */
@@ -252,7 +252,7 @@ int32_t Binary_Receive(void)
             if (RxLength > 0 && RxLength < 1025)
             {
                 /* Read queue data into the APPBuf */
-                UART_RxRead(APPBuf, RxLength);  
+                UART_RxRead(APPBuf, RxLength);
                 Iap_WriteAppBin((APPLICATION_ADDRESS + EraseCounter * 1024),   \
                 APPBuf,  RxLength) ;
                 EraseCounter = 0;
@@ -286,5 +286,5 @@ int32_t Binary_Receive(void)
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

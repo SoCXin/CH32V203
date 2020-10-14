@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -40,10 +40,10 @@
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_Init(void)
 {
@@ -65,10 +65,10 @@ void BSP_EEPROM_Init(void)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_WP_SetHigh(void)
 {
@@ -77,10 +77,10 @@ void BSP_EEPROM_WP_SetHigh(void)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_WP_SetLow(void)
 {
@@ -89,10 +89,10 @@ void BSP_EEPROM_WP_SetLow(void)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_ReadBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 {
@@ -101,10 +101,10 @@ void BSP_EEPROM_ReadBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_WriteBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 {
@@ -166,10 +166,10 @@ void BSP_EEPROM_WriteBytes(uint8_t Addr, uint8_t *pBuf, uint8_t Len)
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_EEPROM_Entry(void)
 {
@@ -209,5 +209,5 @@ void BSP_EEPROM_Entry(void)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

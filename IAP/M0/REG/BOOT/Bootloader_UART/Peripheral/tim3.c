@@ -65,7 +65,7 @@ void TIM3_Processing(void)
  * @brief  Initialize timeout receive timer
  * @param  None
  * @retval  None
- * @attention  The timer can prevent the receiving state machine from having 
+ * @attention  The timer can prevent the receiving state machine from having
  *              an error state when the frame data is received incorrectly
 ******************************************************************************/
 void TIM3_Configure(void)
@@ -87,5 +87,5 @@ void TIM3_Configure(void)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

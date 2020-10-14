@@ -285,5 +285,5 @@ uint32_t Str2Int(uint8_t *inputstr, int32_t *intnum)
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

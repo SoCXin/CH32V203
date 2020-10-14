@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -63,7 +63,7 @@ extern "C" {
 #define ACK                     (0x06)  /* acknowledge */
 #define NAK                     (0x15)  /* negative acknowledge */
 /* two of these in succession aborts transfer */
-#define CA                      (0x18)  
+#define CA                      (0x18)
 #define CRC16                   (0x43)  /* 'C' == 0x43, request 16-bit CRC */
 
 #define ABORT1                  (0x41)  /* 'A' == 0x41, abort by user */
@@ -75,12 +75,12 @@ extern "C" {
 /* Exported functions prototypes -------------------------------------------- */
 EXTERN uint8_t Ymodem_Receive(void);
 
-	
+
 #ifdef __cplusplus
 }
 #endif
 
 
-#endif 
+#endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/

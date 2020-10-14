@@ -107,8 +107,8 @@ static int32_t Receive_Packet(uint8_t *Data, int32_t *Length, uint32_t TimeOut)
     uint8_t  c ;
     uint16_t PacketSize  ;
     uint16_t ComputedCRC ;
-    
-    
+
+
     *Length = 0;
     if (Receive_Byte(&c, TimeOut) != 0)
     {
@@ -188,7 +188,7 @@ static int32_t Ymodem_Download(uint8_t *Buf)
     int32_t SessionDone, FileDone ;
     uint32_t FlashDestination, RamSource;
     int32_t i;
-    
+
     /* Initialize flashdestination variable */
     FlashDestination = APPLICATION_ADDRESS;
 
@@ -221,7 +221,7 @@ static int32_t Ymodem_Download(uint8_t *Buf)
                     }
                     else
                     {  /* File name (first package) */
-                        if (PacketsReceived == 0)  
+                        if (PacketsReceived == 0)
                         {
                             /* Filename packet */
                             if (PacketData[PACKET_HEADER] != 0)/* File name */
@@ -231,17 +231,17 @@ static int32_t Ymodem_Download(uint8_t *Buf)
                                 PACKET_HEADER; (*pFilePtr != 0) &&             \
                                 (i < FILE_NAME_LENGTH);)
                                 {  /* Save file name */
-                                    FileName[i++] = *pFilePtr++;  
+                                    FileName[i++] = *pFilePtr++;
                                 }
                                 FileName[i++] = '\0';
                                 for (i = 0, pFilePtr ++; (*pFilePtr != ' ') && \
                                 (i < (FILE_SIZE_LENGTH - 1));)
                                 {  /* File size */
-                                    FileSize[i++] = *pFilePtr++;  
+                                    FileSize[i++] = *pFilePtr++;
                                 }
                                 FileSize[i++] = '\0';
                                 /* Convert a string to an integer */
-                                Str2Int(FileSize, &Size);  
+                                Str2Int(FileSize, &Size);
 
                                 /* Test the size of the image to be sent */
                                 /* Image size is greater than Flash size */
@@ -283,7 +283,7 @@ static int32_t Ymodem_Download(uint8_t *Buf)
                             {
                                 UARTx_WriteByte(IAP_UART, ACK);
                             }
-                            else 
+                            else
                             {/*An error occurred while writing to Flash memory*/
                                 /* End session */
                                 UARTx_WriteByte(IAP_UART, CA);
@@ -344,8 +344,8 @@ uint8_t Ymodem_Receive(void)
     #if DEBUG_EN
     uint8_t Number[10] = {0};
     #endif
-    int32_t Size = 0;   
-    
+    int32_t Size = 0;
+
     /* Start receiving the file, the file size will be returned after success */
     Size = Ymodem_Download(&Tab_1K[0]);
 
@@ -354,7 +354,7 @@ uint8_t Ymodem_Receive(void)
         AppRxSize = Size ;
         #if DEBUG_EN
         SerialPutString(IAP_UART,                                              \
-        "\r\n Programming Completed Successfully!\n\r-------------\r\n Name: ");        
+        "\r\n Programming Completed Successfully!\n\r-------------\r\n Name: ");
         SerialPutString(IAP_UART, "\n\r->");
         SerialPutString(IAP_UART, FileName);
         Int2Str(Number, Size);
@@ -399,5 +399,5 @@ uint8_t Ymodem_Receive(void)
 
 #endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

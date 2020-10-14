@@ -41,12 +41,12 @@
 
 /******************************************************************************
  * @brief  Create queue
- * @param  
- * @retval 
- * @attention  
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 uint32_t Queue_PacketCreate(QUEUE8_t *pQ8, uint8_t *pBuf, uint32_t BufSize)
-{    
+{
     pQ8->BufSize    = BufSize;
     pQ8->pBuf       = pBuf;
     pQ8->pStart     = pBuf;
@@ -57,14 +57,14 @@ uint32_t Queue_PacketCreate(QUEUE8_t *pQ8, uint8_t *pBuf, uint32_t BufSize)
 
 /******************************************************************************
  * @brief  Write data into queue
- * @param  
- * @retval 
- * @attention  
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 uint32_t Queue_PacketIn(QUEUE8_t *pQ8, uint8_t *pData, uint32_t Len)
 {
-    volatile uint8_t    *pEnd   = NULL;  
-    volatile uint32_t    Index   = 0;    
+    volatile uint8_t    *pEnd   = NULL;
+    volatile uint32_t    Index   = 0;
 
     pEnd = pQ8->pEnd;
 
@@ -89,13 +89,13 @@ uint32_t Queue_PacketIn(QUEUE8_t *pQ8, uint8_t *pData, uint32_t Len)
 
 /******************************************************************************
  * @brief  Read data out from queue
- * @param  
- * @retval 
- * @attention  
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 uint32_t Queue_PacketOut(QUEUE8_t *pQ8, uint8_t *pData, uint32_t DataLen)
 {
-    volatile uint8_t    *pStart   = NULL;  
+    volatile uint8_t    *pStart   = NULL;
     volatile uint32_t Index = 0;
 
     pStart = pQ8->pStart;
@@ -116,9 +116,9 @@ uint32_t Queue_PacketOut(QUEUE8_t *pQ8, uint8_t *pData, uint32_t DataLen)
 
 /******************************************************************************
  * @brief  Get data length in the queue
- * @param  
- * @retval 
- * @attention  
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 uint32_t Queue_PacketLengthGet(QUEUE8_t *pQ8)
 {
@@ -141,4 +141,4 @@ uint32_t Queue_PacketLengthGet(QUEUE8_t *pQ8)
 
 #endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/

@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -44,7 +44,7 @@ extern "C" {
 /* Exported constants -------------------------------------------------------*/
 
 /* check type of CRC define ,0x43 for CRC , 0x15 for SUM*/
-#define XM_CHECKTYPE  0x43 
+#define XM_CHECKTYPE  0x43
 
 #define PACKET_HEADER_SIZE      ((uint32_t)3)
 #define PACKET_DATA_INDEX       ((uint32_t)4)
@@ -69,9 +69,9 @@ extern "C" {
 #define NAK  0x15
 #define CAN  0x18
 #define CTRLZ 0x1A
-#define CA	 0x18	 
-#define C	 0x43	 
- 
+#define CA	 0x18
+#define C	 0x43
+
 #define CHECK_CRC       0x43
 #define CHECK_SUM       0x15
 
@@ -96,7 +96,7 @@ extern "C" {
     #define RIGHT    (0)
 #endif
 
-    
+
 #define DLY_1S 1000
 #if (IAP_BAUD>9600)
 #define DLY_1MS 1
@@ -105,11 +105,11 @@ extern "C" {
 #endif
 #define MAXRETRANS 25
 #define CONNECT_TIMES 1000
-    
+
 /* Exported function prototypes ---------------------------------------------*/
 EXTERN uint8_t Xmodem_Receive(uint8_t CheckType);
 
-	
+
 #ifdef __cplusplus
 }
 #endif
@@ -118,4 +118,4 @@ EXTERN uint8_t Xmodem_Receive(uint8_t CheckType);
 #endif
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/

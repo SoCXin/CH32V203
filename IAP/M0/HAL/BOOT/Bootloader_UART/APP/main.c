@@ -4,16 +4,6 @@
  * @version V1.00
  * @date    12-June-2020
  * @brief   ......
- ******************************************************************************
- *  @attention
- *
- *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
- *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
- *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- *  CONSEQUENTIAL DAMAGES ABOUT ANY CLAIMS ARISING OUT OF THE CONTENT OF SUCH
- *  HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
- *  CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
- *  <H2><CENTER>&COPY; COPYRIGHT 2020 MINDMOTION </CENTER></H2>
 ******************************************************************************/
 
 
@@ -32,6 +22,20 @@
 #include "check.h"
 
 /* Includes -----------------------------------------------------------------*/
+
+/* Exported variables -------------------------------------------------------*/
+
+uint32_t AppRxSize = 0 ;  /* Save received app size */
+
+/* define Interrupt handler pointer tableÂ£Â¬which is at 0X20000000 */
+#ifndef USE_IAR
+NVIC_TABLE_t tNVIC_Table __attribute__((at(0x20000000)));
+#else
+NVIC_TABLE_t tNVIC_Table __attribute__((section(".ARM.__at_0x20000000")));
+#endif
+/* System Clock Frequency (Core Clock = HSI/6) */
+uint32_t SystemCoreClock = 8000000 ;
+
 
 /* Private typedef ----------------------------------------------------------*/
 typedef void (*pFunction)(void);
@@ -60,7 +64,7 @@ typedef struct
     TIM_ITConfig(TIM3,TIM_IT_Update,DISABLE);                                 \
     UART_ClearITPendingBit(IAP_UART,UART_IT_RXIEN);                           \
     UART_ITConfig(IAP_UART,UART_IT_RXIEN,DISABLE);}
-           
+
 /* Private variables --------------------------------------------------------*/
 pFunction Jump_To_Application;
 __IO uint32_t JumpAddress;
@@ -70,7 +74,7 @@ static ParaBlock IAPParaBlock_s =
     0,      /* Whether or not there is request of upgrading  0:NO ; 1:YES */
     0,      /* Whether or not there is APP   0:NO ; 1:YES  */
     0,      /* AppBinCheckSUM : Cumulative sum */
-    1,      /* UART_BAUD  0: 9600 ; 1: 115200 */    
+    1,      /* UART_BAUD  0: 9600 ; 1: 115200 */
 };
 
 #if (CHECKAPP_EN)
@@ -96,7 +100,7 @@ static void Iap_Jump_To_Address(uint32_t wUserFlashAddr)
         if (((*(__IO uint32_t *)wUserFlashAddr) & 0x2FFE0000) == 0x20000000)
         {
             /* Check if the stack top address is legal. */
-          
+
             JumpAddress = *(__IO uint32_t *)(wUserFlashAddr + 4);
             Jump_To_Application = (pFunction) JumpAddress;
             /* Initialize user application's Stack Pointer */
@@ -127,10 +131,10 @@ static void Iap_Jump_To_Address(uint32_t wUserFlashAddr)
 static void BootLoader_Entry(void)
 {
     static int8_t LoadAppResult = -1;
-    
+
     #if MERGE_HEX_EN
     if((IAPParaBlock_s.AppExsitFlag==0x01&&IAPParaBlock_s.UpgradeReqFlag==0)|| \
-      (IAPParaBlock_s.AppExsitFlag==0xFF&&IAPParaBlock_s.UpgradeReqFlag==0xFF))
+        (IAPParaBlock_s.AppExsitFlag==0xFF&&IAPParaBlock_s.UpgradeReqFlag==0xFF))
     #else
     if((IAPParaBlock_s.AppExsitFlag==0x01&&IAPParaBlock_s.UpgradeReqFlag==0))
     #endif
@@ -148,31 +152,31 @@ static void BootLoader_Entry(void)
             ========\r\n\r\n");
             #endif
             /*Using XMODEM (1K) protocol to transmit user program data*/
-            LoadAppResult = Xmodem_Receive(XM_CHECKTYPE);  
+            LoadAppResult = Xmodem_Receive(XM_CHECKTYPE);
             #elif defined (YMODEM_EN)  || defined (YMODEM1K_EN)
             #if DEBUG_EN
             SerialPutString(IAP_UART, "\r\n  ==== YmodemBootloader is running \
             ========\r\n\r\n");
             #endif
             /*Using YMODEM (1K) protocol to transmit user program data*/
-            LoadAppResult = Ymodem_Receive();  
+            LoadAppResult = Ymodem_Receive();
             #elif defined (BINARY_EN)
             #if DEBUG_EN
             SerialPutString(IAP_UART, "\r\n  ==== BianryBootloader is running \
             ========\r\n\r\n");
             #endif
             /*Using Binary protocol to transmit user program data*/
-            LoadAppResult = Binary_Receive();  
+            LoadAppResult = Binary_Receive();
             #elif defined (ASCII_EN)
             #if DEBUG_EN
             SerialPutString(IAP_UART, "\r\n  ==== AsciiBootloader is running  \
             =======\r\n\r\n");
             #endif
             /*Using Ascii protocol to transmit user program data*/
-            LoadAppResult = Ascii_Receive();  
+            LoadAppResult = Ascii_Receive();
             #else
             /*Transport protocol not defined, output warning*/
-            LoadAppResult = WAIT_UNAUTH ;  
+            LoadAppResult = WAIT_UNAUTH ;
             #endif
         }
         else if(IAPParaBlock_s.UpgradeReqFlag == 0x00)
@@ -192,17 +196,17 @@ static void BootLoader_Entry(void)
         #if (CHECKAPP_EN)
         {
             #ifndef ASCII_EN
-            /* Need to check the bin data.During debugging the program,you can \    
-               shield this operations*/   
+            /* Need to check the bin data.During debugging the program,you can \
+               shield this operations*/
             TempCheckData = CalChecksum((const uint8_t*)(APPLICATION_ADDRESS), \
-                AppRxSize);    
+                AppRxSize);
             if( TempCheckData ==  IAPParaBlock_s.AppBinCheck                   \
                    || IAPParaBlock_s.AppBinCheck == 0xFF)
             {
                 IAPParaBlock_s.AppBinCheck = TempCheckData ;
                 DISABLE_INT_USER() ;
                 Iap_Jump_To_Address(APPLICATION_ADDRESS);
-            }            
+            }
             else
             {
                 #if DEBUG_EN
@@ -215,16 +219,16 @@ static void BootLoader_Entry(void)
             #else
             DISABLE_INT_USER() ;
             Iap_Jump_To_Address(APPLICATION_ADDRESS);
-            #endif          
+            #endif
         }
         #else
         DISABLE_INT_USER() ;
         Iap_Jump_To_Address(APPLICATION_ADDRESS);
         #endif
-        
+
         break;
-    case WAIT_FAILED_CONN:    
-        #if DEBUG_EN        
+    case WAIT_FAILED_CONN:
+        #if DEBUG_EN
         SerialPutString(IAP_UART, "The link is not connected!!!\r\n");
         #endif
         if(IAPParaBlock_s.AppExsitFlag != 0xFF )
@@ -233,12 +237,12 @@ static void BootLoader_Entry(void)
             Iap_Jump_To_Address(APPLICATION_ADDRESS);
         }
         break;
-    case WAIT_DISCONN:  
+    case WAIT_DISCONN:
         #if DEBUG_EN
         SerialPutString(IAP_UART, "The transmission was terminated!!!\r\n");
         #endif
         break;
-    case WAIT_ERRORS:  
+    case WAIT_ERRORS:
         #if DEBUG_EN
         SerialPutString(IAP_UART, "Too much error during transmission!!!\r\n");
         #endif
@@ -252,7 +256,7 @@ static void BootLoader_Entry(void)
     {
         #if DEBUG_EN
         SerialPutString(IAP_UART, "Manual restart required!!!\r\n");
-        #endif 
+        #endif
         LoadAppResult = -1 ;
         FLASH_Unlock();
         FLASH_ErasePage(PARA_ADDRESS);
@@ -260,22 +264,6 @@ static void BootLoader_Entry(void)
         NVIC_SystemReset() ;  /*Restart and wait for the next upgrade */
     }
 }
-
-/* Exported variables -------------------------------------------------------*/
-
-uint32_t AppRxSize = 0 ;  /* Save received app size */
-
-/* define Interrupt handler pointer table£¬which is at 0X20000000 */
-#ifndef USE_IAR
-NVIC_TABLE_t tNVIC_Table __attribute__((at(0x20000000)));
-#else
-NVIC_TABLE_t tNVIC_Table __attribute__((section(".ARM.__at_0x20000000")));
-#endif
-/* System Clock Frequency (Core Clock = HSI/6) */
-uint32_t SystemCoreClock = 8000000 ;  
-
-/* Exported function prototypes ---------------------------------------------*/
-/* Exported function --------------------------------------------------------*/
 
 /******************************************************************************
  * @brief  main
@@ -285,13 +273,14 @@ uint32_t SystemCoreClock = 8000000 ;
 ******************************************************************************/
 int main(void)
 {
-    /* __enable_irq() ;  */   /* If use __disable_irq() before jumping boot */
+    /* __enable_irq() ;  */
+    /* If use __disable_irq() before jumping boot */
     /* Config IAP_UART with parameter(IAP_BAUD, N, 8, 1) for printf */
     UARTx_Configure(IAP_UART, IAP_BAUD);
 
     /* Config TIM3 */
     TIM3_Configure();
-    
+
     #if DEBUG_EN
     SerialPutString(IAP_UART, "BOOT is running !\r\n");
     #endif
@@ -301,10 +290,9 @@ int main(void)
     IAPParaBlock_s.UpBaud = *(vu8*)(PARA_ADDRESS+3) ;
     /* Download app entrance */
     BootLoader_Entry();
-
     return 0;
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

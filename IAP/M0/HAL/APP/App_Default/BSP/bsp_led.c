@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -38,10 +38,10 @@
 
 
 /******************************************************************************
- * @brief       
- * @param       
- * @retval      
- * @attention   
+ * @brief
+ * @param
+ * @retval
+ * @attention
 ******************************************************************************/
 void BSP_LED_Init(void)
 {
@@ -49,7 +49,7 @@ void BSP_LED_Init(void)
 
     /* GPIOA and GPIOB Peripheral clock enable */
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB, ENABLE);
-    
+
     /* Configure PB3 PB4 and PB5 in output pushpull mode */
     GPIO_StructInit(&GPIO_InitStructure);
     GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
@@ -59,19 +59,19 @@ void BSP_LED_Init(void)
 
     /* Reset PB3 PB4 and PB5 : turn LED2 LED3 and LED4 on */
     GPIO_ResetBits(GPIOB, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5);
-    
+
      /* Configure PA15 in output pushpull mode */
     /* Reset PA15 : turn LED1 on */
-/*   
+/*
     GPIO_StructInit(&GPIO_InitStructure);
     GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_15;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);   
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_ResetBits(GPIOA, GPIO_Pin_15);
-*/ 
+*/
 }
 
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 

@@ -6,7 +6,7 @@
  * @brief   ......
  ******************************************************************************
  *  @attention
- * 
+ *
  *  THE EXISTING FIRMWARE IS ONLY FOR REFERENCE, WHICH IS DESIGNED TO PROVIDE
  *  CUSTOMERS WITH CODING INFORMATION ABOUT THEIR PRODUCTS SO THEY CAN SAVE
  *  TIME. THEREFORE, MINDMOTION SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
@@ -47,19 +47,19 @@ extern "C" {
 
 /* Exported constants -------------------------------------------------------*/
 /*Use the default address value in the hex file*/
-#define USE_DFT_ADDR                0x01    
+#define USE_DFT_ADDR                0x01
 /*Use the address value you specify*/
-#define USE_USER_DEFINED_ADDR       0x02   
+#define USE_USER_DEFINED_ADDR       0x02
 /* Cache size of UART received data */
 #define UART_REC_LEN     3100
 /*Buffer size of temporary hex file data*/
-#define BUFFER_SIZE      3000    
+#define BUFFER_SIZE      3000
 
-#define SET     true        
-#define RESET   false       
-#define AUTO    true       
-#define MANUAL  false      
-	
+#define SET     true
+#define RESET   false
+#define AUTO    true
+#define MANUAL  false
+
 #ifndef NULL
     #define NULL    ((void *)0)
 #endif
@@ -77,20 +77,20 @@ extern "C" {
 #endif
 
 /*Used to record data, most records of hex file are data records*/
-#define     RCD_DATA                '0' 
-/*It is used to identify the end of the file, put at the end of the file, 
+#define     RCD_DATA                '0'
+/*It is used to identify the end of the file, put at the end of the file,
 and identify the end of the hex file*/
-#define     RCD_END_FILE            '1' 
+#define     RCD_END_FILE            '1'
 /*Record used to identify the extension address*/
-#define     RCD_EXT_SEGMENT_ADDR    '2' 
+#define     RCD_EXT_SEGMENT_ADDR    '2'
 /*The record used to identify the address of the starting segment*/
-#define     RCD_START_SEGMENT_ADDR  '3' 
+#define     RCD_START_SEGMENT_ADDR  '3'
 /*Records used to identify extended linear addresses*/
-#define     RCD_EXT_LINEAR_ADDR     '4' 
+#define     RCD_EXT_LINEAR_ADDR     '4'
 /*A record used to identify the starting linear address*/
-#define     RCD_START_LINEAR_ADDR   '5' 
+#define     RCD_START_LINEAR_ADDR   '5'
 /*Error type*/
-#define     RCD_ERROR_TYPE           0  
+#define     RCD_ERROR_TYPE           0
 
 /* Exported typedef -------------------------------------------------------*/
 
@@ -105,20 +105,20 @@ typedef enum {
 
 typedef struct {
     bool bAutoReset;    //  reset type
-    bool bIsSet;        //  initial state 
+    bool bIsSet;        //  initial state
 } event_t;
 
 
 typedef struct
 {
-/*The length field of this record. It represents the number of bytes of data*/     
-    uint32_t    DataLength;            
-    uint32_t    AddrBase;     /*Base address information*/                
-    uint32_t    OffsetAddr;   /*Offset address information*/              
-    uint32_t    Rectype;  /*This field represents the type of the hex record*/              
-    uint32_t    SumCheckOk;   /*The data and verification are correct*/              
-    uint8_t     *pData;       /*Data field pointer*/             
-    //uint8_t   *p_NextLineAddr;   /*Next row of hex data pointer*/        
+/*The length field of this record. It represents the number of bytes of data*/
+    uint32_t    DataLength;
+    uint32_t    AddrBase;     /*Base address information*/
+    uint32_t    OffsetAddr;   /*Offset address information*/
+    uint32_t    Rectype;  /*This field represents the type of the hex record*/
+    uint32_t    SumCheckOk;   /*The data and verification are correct*/
+    uint8_t     *pData;       /*Data field pointer*/
+    //uint8_t   *p_NextLineAddr;   /*Next row of hex data pointer*/
 } t_HexLineInfo;
 
 /* Exported function prototypes ---------------------------------------------*/
@@ -132,7 +132,7 @@ EXTERN int32_t Ascii_Receive (void);
 }
 #endif
 
-#endif 
+#endif
 
-/******************* (C) COPYRIGHT 2020 ************************END OF FILE***/
+/******************* (C) COPYRIGHT 2020 ***************************/
 
