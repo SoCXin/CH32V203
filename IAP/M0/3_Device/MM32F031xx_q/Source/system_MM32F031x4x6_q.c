@@ -56,9 +56,9 @@ If you are using different crystal you have to adapt those functions accordingly
 
 //#define SYSCLK_FREQ_HSE    HSE_VALUE
 
-#define SYSCLK_HSI_48MHz    48000000
+//#define SYSCLK_HSI_48MHz    48000000
 
-//#define SYSCLK_HSI_72MHz    72000000
+#define SYSCLK_HSI_72MHz    72000000
 
 /**
 * @}

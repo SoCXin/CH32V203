@@ -57,7 +57,6 @@ void SysTick_Init(uint32_t ticks)
         /* Capture error */
         while(1);
     }
-
     NVIC_SetPriority(SysTick_IRQn, 0);    
 }
 

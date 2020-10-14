@@ -172,10 +172,8 @@ int main(void)
     BSP_LED_Init();	
 	
     #ifndef ASCII_EN 
-	RCC_GetClocksFreq(&get_rcc_clock);
-    printf("====== MM32_M0_IAP_UART_DEMO £¡======\r\n");
-    printf("\r\n");
-    printf("APP is running £¡\r\n");
+		RCC_GetClocksFreq(&get_rcc_clock);
+    printf("\r\n====== MM32 M0 IAP UART DEMO =====\r\n");
     printf("SystemCoreClock = %d\r\n", SystemCoreClock);
     printf("SYSCLK_Frequency = %d\r\n", get_rcc_clock.SYSCLK_Frequency);
     printf("HCLK_Frequency = %d\r\n", get_rcc_clock.HCLK_Frequency);

@@ -43,7 +43,7 @@ extern "C" {
 
 //#define ASCII_EN    /* transfer protocol define */
 
-#define IAP_BAUD    115200  /* transfer Baud rate define , 9600 or 115200  */
+#define IAP_BAUD    9600  /* transfer Baud rate define , 9600 or 115200  */
 
 #define APPLICATION_ADDRESS     (uint32_t)0x8001400
 #define PARA_ADDRESS     (uint32_t)0x8001000 
