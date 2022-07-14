@@ -1,17 +1,27 @@
-﻿# [MM32](https://github.com/SoCXin/MM32)
+﻿# [KT6368A](https://docs.soc.xin/KT6368A)
 
-[![sites](http://182.61.61.133/link/resources/SoC.png)](http://www.SoC.Xin)
+* [清月电子](http://www.szqyvhome.com/)：
+* [L0R1](https://github.com/SoCXin/Level)：
 
-#### [Vendor](https://github.com/SoCXin/Vendor)：[MindMotion](http://www.mm32.com.cn/)
+## [简介](https://github.com/SoCXin/KT6368A/wiki)
 
-[MM32](https://github.com/SoCXin/MM32) 系列包括多种型号规格，开源资源逐渐丰富
+[KT6368A](http://www.szqyvhome.com/ProductDetail/4781914.html)
 
-#### 收录型号
+#### 关键特性
 
-* [MM32F031](https://github.com/SoCXin/MM32F031)
-* [MM32F103](https://github.com/SoCXin/MM32F103)
-* [MM32L073](https://github.com/SoCXin/MM32L073)
-* [MM32W373](https://github.com/SoCXin/MM32W373)
-* [MM32SPIN05](https://github.com/SoCXin/MM32SPIN05)
+* 支持蓝牙双模的纯数据芯片
+* 蓝牙5.1
 
-###  [SoC芯平台](http://www.SoC.Xin)
+### [收录资源](https://github.com/SoCXin/KT6368A)
+
+* [参考资源](src/)
+* [参考文档](docs/)
+* [参考工程](project/)
+
+### [选型建议](https://github.com/SoCXin)
+
+[KT6368A](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.74a52e8dTpp1my&id=630430098226&_u=kkqekj7c9f9) 低成本国产蓝牙芯片
+
+
+### [www.SoC.xin](http://www.SoC.Xin)
+

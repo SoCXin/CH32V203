@@ -1,4 +1,6 @@
 *.pyc
 .pio/
 .vscode/
-software/*.bin
+obj
+.settings
+.template
