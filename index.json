@@ -1,0 +1,55 @@
+{
+    "type":"MCU",
+    "name":"CH32V203",
+    "title": "WCH CH32V203",
+    "description":"WCH RISC-V3A CH32V203 MCU",
+    "version":"1.0.0",
+    "Core": {
+        "num": 1,
+        "type":"RISC-V",
+        "Freq":[8,80],
+        "DMIPS": 100,
+        "CoreMark": 160
+    },
+    "manufacturer": {
+        "vendor":"WCH",
+        "homepage": "http://www.wch.cn/products/CH32V203.html"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SoCXin/CH32V203.git"
+    },
+    "series":["CH32V103R8","CH32V103C8","CH32V103C6"],
+    "package":["LQFP64M","LQFP48","QFN48"],
+    "peripheral": ["TIM","ADC","USB","UART","SPI","LDO","PWM"],
+    "price":[4,8],
+    "PWR": {
+        "VDD": [2800,5000],
+        "Ivdd": 3.5,
+        "LDO": [5000,3300],
+        "rate": 1024
+    },
+    "PWM": {
+        "num": 2,
+        "resolution": 8,
+        "rate": 256
+    },
+    "EMC": {
+        "EFT": 2000,
+        "ESD": 4000
+    },
+    "upload": {
+        "ISP": true,
+        "IAP": true,
+        "SWD": true,
+        "speed": 115200
+    },
+    "keywords": [
+        "dev-platform",
+        "RISC-V",
+        "WCH",
+        "CH32V203",
+        "DAC","SDIO","CAN","I2C","RTC","SPI",
+        "3.6V","1.8V"
+    ]
+}
