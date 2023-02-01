@@ -5,8 +5,10 @@
 * Date               : 2022/06/02
 * Description        : This file contains the configurations of 
 *                      Ethernet protocol stack library
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 #ifndef __NET_CONFIG_H__
 #define __NET_CONFIG_H__
@@ -22,7 +24,7 @@ extern "C" {
 
 #define WCHNET_NUM_UDP                1  /* The number of UDP connections */
 
-#define WCHNET_NUM_TCP                0  /* Number of TCP connections (server + client) */
+#define WCHNET_NUM_TCP                0  /* Number of TCP connections */
 
 #define WCHNET_NUM_TCP_LISTEN         0  /* Number of TCP listening */
 

@@ -4,12 +4,13 @@
  * Version            : V1.1
  * Date               : 2020/08/06
  * Description        :
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /******************************************************************************/
-/* 澶存枃浠跺寘鍚� */
 #include <time_units.h>
 #include "CONFIG.h"
 #include "HAL.h"
@@ -367,9 +368,26 @@ void button_changed(uint8_t keys)
 }
 
 /*********************************************************************
+ * @fn      Main_Circulation
+ *
+ * @brief   Main loop
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+__attribute__((noinline))
+void Main_Circulation(void)
+{
+    while(1)
+    {
+        TMOS_SystemProcess();
+    }
+}
+
+/*********************************************************************
  * @fn      main
  *
- * @brief   涓诲嚱鏁�
+ * @brief   Main function
  *
  * @return  none
  */
@@ -389,10 +407,7 @@ int main(void)
     ancs_subscribe_cb_register(&subscribe);
     GAPRole_PeripheralInit();
     peripheral_ancs_client_init();
-    while(1)
-    {
-        TMOS_SystemProcess();
-    }
+    Main_Circulation();
 }
 
 /******************************** endfile @ main ******************************/

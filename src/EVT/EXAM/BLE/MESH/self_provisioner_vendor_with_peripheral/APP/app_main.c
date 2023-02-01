@@ -4,12 +4,14 @@
  * Version            : V1.2
  * Date               : 2022/06/22
  * Description        :
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /******************************************************************************/
-/* 头文件包含 */
+/* Header file contains */
 #include "CONFIG.h"
 #include "MESH_LIB.h"
 #include "HAL.h"
@@ -64,9 +66,26 @@ uint8_t bt_mesh_lib_init(void)
 }
 
 /*********************************************************************
+ * @fn      Main_Circulation
+ *
+ * @brief   Main loop
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+__attribute__((noinline))
+void Main_Circulation(void)
+{
+    while(1)
+    {
+        TMOS_SystemProcess();
+    }
+}
+
+/*********************************************************************
  * @fn      main
  *
- * @brief   主函数
+ * @brief   Main function
  *
  * @return  none
  */
@@ -81,10 +100,7 @@ int main(void)
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
-    while(1)
-    {
-        TMOS_SystemProcess();
-    }
+    Main_Circulation();
 }
 
 /******************************** endfile @ main ******************************/

@@ -4,15 +4,19 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- 外部触发ADC转换例程：
- ADC通道1(PA1)-注入组通道，外部触发引脚(PA15)高电平触发 EXTI线15 事件，
- 该模式下，通过 EXTI线15 事件触发一次ADC转换，转换结束后产生JEOC中断。
+ External lines trigger ADC conversion routine:
+ ADC channel 1 (PA1) - injection group channel, external trigger pin (PA15) high
+ level triggers EXTI line 15 event,In this mode, an ADC conversion is triggered
+ by an event on EXTI line 15, and a JEOC interrupt is generated after the conversion
+ is completed.
 
 */
 
@@ -71,7 +75,6 @@ void ADC_Function_Init(void)
     while(ADC_GetCalibrationStatus(ADC1));
     Calibrattion_Val = Get_CalibrationValue(ADC1);
 
-    ADC_BufferCmd(ADC1, ENABLE); //enable buffer
 }
 
 /*********************************************************************

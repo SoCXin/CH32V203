@@ -3,20 +3,22 @@
  * Author             : WCH
  * Version            : V1.1
  * Date               : 2019/11/05
- * Description        : 判断标志以及搬运代码到APP代码区
+ * Description        : Judgment logo and handling code to the APP code area
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /******************************************************************************/
-/* 头文件包含 */
+/* Header file contains */
 #include "DEBUG.h"
 #include "OTA.h"
 
-/* 记录当前的Image */
+/* Record the current image */
 unsigned char CurrImageFlag = 0xff;
 
-/* flash的数据临时存储 */
+/* Flash data temporary storage */
 __attribute__((aligned(8))) uint8_t block_buf[256];
 
 #define jumpApp    ((void (*)(void))((int *)(IMAGE_A_START_ADD-0x08000000)))
@@ -28,7 +30,7 @@ __attribute__((aligned(8))) uint8_t block_buf[256];
 /*********************************************************************
  * @fn      FLASH_read
  *
- * @brief   读 flash
+ * @brief   Read Flash
  *
  * @return  none
  */
@@ -44,9 +46,9 @@ void FLASH_read(uint32_t addr, uint8_t *pData, uint32_t len)
 /*********************************************************************
  * @fn      SwitchImageFlag
  *
- * @brief   切换dataflash里的ImageFlag
+ * @brief   Switch the ImageFlag in DataFlash
  *
- * @param   new_flag    - 切换的ImageFlag
+ * @param   new_flag    - Switching ImageFlag
  *
  * @return  none
  */
@@ -55,20 +57,20 @@ void SwitchImageFlag(uint8_t new_flag)
     uint16_t i;
     uint32_t ver_flag;
 
-    /* 读取第一块 */
+    /* Read the first block */
     FLASH_read(OTA_DATAFLASH_ADD, &block_buf[0], 4);
 
     FLASH_Unlock_Fast();
-    /* 擦除第一块 */
+    /* Erase the first block */
     FLASH_ErasePage_Fast( OTA_DATAFLASH_ADD );
 
-    /* 更新Image信息 */
+    /* Update Image information */
     block_buf[0] = new_flag;
     block_buf[1] = 0x5A;
     block_buf[2] = 0x5A;
     block_buf[3] = 0x5A;
 
-    /* 编程DataFlash */
+    /* Program DataFlash */
     FLASH_ProgramPage_Fast( OTA_DATAFLASH_ADD, (uint32_t *)&block_buf[0]);
     FLASH_Lock_Fast();
 }
@@ -76,7 +78,7 @@ void SwitchImageFlag(uint8_t new_flag)
 /*********************************************************************
  * @fn      jump_APP
  *
- * @brief   切换APP程序
+ * @brief   Switch APP program
  *
  * @return  none
  */
@@ -102,7 +104,7 @@ void jump_APP(void)
             }
         }
         SwitchImageFlag(IMAGE_A_FLAG);
-        // 销毁备份代码
+        // Destroy the backup code
         for(i = 0; i < IMAGE_A_SIZE / 4096; i++)
         {
             FLASH_ErasePage(IMAGE_B_START_ADD + (i * 4096));
@@ -116,7 +118,8 @@ void jump_APP(void)
 /*********************************************************************
  * @fn      ReadImageFlag
  *
- * @brief   读取当前的程序的Image标志，DataFlash如果为空，就默认是ImageA
+ * @brief   Read the iMage logo of the current program. 
+ *          If the DataFlash is empty, it will be ImageA by default
  *
  * @return  none
  */
@@ -127,7 +130,8 @@ void ReadImageFlag(void)
     FLASH_read(OTA_DATAFLASH_ADD, (uint8_t *)&p_image_flash, 4);
     CurrImageFlag = p_image_flash.ImageFlag;
 
-    /* 程序第一次执行，或者没有更新过，以后更新后在擦除DataFlash */
+    /* The program is executed for the first time, or it has not been updated, 
+     * and the DataFlash will be erased after the subsequent update. */
     if((p_image_flash.flag[0]!=0x5A)||(p_image_flash.flag[1]!=0x5A)||(p_image_flash.flag[2]!=0x5A))
     {
         CurrImageFlag = IMAGE_A_FLAG;
@@ -138,7 +142,7 @@ void ReadImageFlag(void)
 /*********************************************************************
  * @fn      main
  *
- * @brief   主函数
+ * @brief   Main function
  *
  * @return  none
  */

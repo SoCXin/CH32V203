@@ -4,25 +4,30 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- FLASH的擦/读/写例程：
-   包括标准擦除和编程、快速擦除和编程。
+ FLASH erase/read/write, and fast programming:
+   Includes Standard Erase and Program, Fast Erase and Program.
 
-   注意：
-   a-擦除成功部分读非0xFF：
-            字读——0xe339e339
-            半字读——0xe339
-            字节读——0x39
-            偶地址字节读——0x39
-            奇地址字节读——0xe3
-   b-在主频超过100MHz时，操作FLASH时需注意：
-            在进行非零等待区域FLASH和零等待区域FLASH、用户字读写以及厂商配置字和Boot区域读时，需做以下操作，
-            首先将HCLK进行2分频，FLASH操作完成后再恢复，保证FLASH操作是频率低于100Mhz。
+
+   a-Erase successful part read non-0xFF:
+                      Word reading--0xe339e339
+               Half-word reading--0xe339
+                        byte read--0x39
+           Even address byte read--0x39
+            Odd address byte read--0xe3
+   b-When the main frequency exceeds 100MHz, attention should be paid when operating the FLASH:
+            When performing non-zero waiting area FLASH and zero waiting area FLASH, reading and
+            writing user words, and reading manufacturer configuration words and Boot area,
+            the following operations are required.First divide the frequency of HCLK by 2, and
+             resume after the FLASH operation is completed to ensure that the frequency of the
+             FLASH operation is lower than 100Mhz.
 
 */
 
@@ -46,9 +51,9 @@ uint16_t Data = 0xAAAA;
 uint32_t WRPR_Value = 0xFFFFFFFF, ProtectedPages = 0x0;
 uint32_t NbrOfPage;
 volatile FLASH_Status FLASHStatus = FLASH_COMPLETE;
-
 volatile TestStatus MemoryProgramStatus = PASSED;
 volatile TestStatus MemoryEraseStatus = PASSED;
+u32 buf[64];
 
 /*********************************************************************
  * @fn      Flash_Test
@@ -60,7 +65,10 @@ volatile TestStatus MemoryEraseStatus = PASSED;
 void Flash_Test(void)
 {
     printf("FLASH Test\n");
-
+ /*When the main frequency exceeds 100MHz, attention should be paid when 
+  *operating FLASH: dividing HCLK by two will result in the related peripheral 
+  *clock of HCLK being divided by two. Attention should be paid when using.
+  */
     RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV2;
     __disable_irq();
     USART_Printf_Init(115200);
@@ -69,7 +77,7 @@ void Flash_Test(void)
 
     NbrOfPage = (PAGE_WRITE_END_ADDR - PAGE_WRITE_START_ADDR) / FLASH_PAGE_SIZE;
 
-    FLASH_ClearFlag(FLASH_FLAG_BSY | FLASH_FLAG_EOP|FLASH_FLAG_PGERR |FLASH_FLAG_WRPRTERR);
+    FLASH_ClearFlag(FLASH_FLAG_BSY | FLASH_FLAG_EOP |FLASH_FLAG_WRPRTERR);
 
     for(EraseCounter = 0; (EraseCounter < NbrOfPage) && (FLASHStatus == FLASH_COMPLETE); EraseCounter++)
     {
@@ -130,7 +138,6 @@ void Flash_Test(void)
 void Flash_Test_Fast(void)
 {
 	u16 i,j,flag;
-    u32 buf[64];
 
     for(i=0; i<64; i++){
         buf[i] = i;

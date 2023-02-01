@@ -4,16 +4,20 @@
 * Version            : V1.0.0
 * Date               : 2022/05/10
 * Description        : Main program body.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 /*
  *@Note
-  ETH_UART例程，演示以太网与UART的数据透传。默认使用1000000波特率（可在bsp_uart.h中更改）进行串口数据传输。
+ETH_UART example demonstrates data transparency between Ethernet and UART.
+By default, 1000000 baud rate (can be changed in bsp_uart.h) is used for serial port data transmission.
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
 */
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 #include "bsp_uart.h"
 
@@ -28,7 +32,7 @@ u8 SocketRecvBuf[RECE_BUF_LEN];                         //socket data buff
 u16 desport = 1000;                                     //destination port
 u16 srcport = 1000;                                     //source port
 
-u8 tcpConnValid = 0;                                    //0 disconnected  1 connect
+u8 TCPConnValid = 0;                                    //0 disconnected  1 connect
 
 /*********************************************************************
  * @fn      mStopIfError
@@ -241,18 +245,18 @@ void WCHNET_HandleSockInt(u8 socketid,u8 intstat)
     }
     if(intstat & SINT_STAT_CONNECT)                     //connect successfully
     {
-        tcpConnValid = 1;
+        TCPConnValid = 1;
         WCHNET_ModifyRecvBuf(socketid, (u32)SocketRecvBuf, RECE_BUF_LEN);
         printf("TCP Connect Success\r\n");
     }
     if(intstat & SINT_STAT_DISCONNECT)                  //disconnect
     {
-        tcpConnValid = 0;
+        TCPConnValid = 0;
         printf("TCP Disconnect\r\n");
     }
     if(intstat & SINT_STAT_TIM_OUT)                     //timeout disconnect
     {
-        tcpConnValid = 0;
+        TCPConnValid = 0;
         printf("TCP Timeout\r\n");
         WCHNET_CreateTcpSocket();
     }
@@ -339,7 +343,7 @@ int main(void)
         {
             WCHNET_HandleGlobalInt();
         }
-        if(tcpConnValid){
+        if(TCPConnValid){
             uartTx();
             uartRxAndSendDataToETH();
         }

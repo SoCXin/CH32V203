@@ -4,18 +4,23 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- OPA1作电压跟随器输出，外部电压输出给OPA1，ADC采样OPA1
- OPA1_CHP1——PB0
- OPA1_CHN1——PA6
- OPA1_OUT_IO_OUT0——PA3
+ OPA1 is used as a voltage follower output, the external voltage is output to OPA1,
+  and the ADC samples OPA1
+ OPA1_CHP1 -- PB0
+ OPA1_CHN1 -- PA6
+ OPA1_OUT_IO_OUT0 -- PA3
 
-   本例中PA6和PA3短接，外部电压从PB0输入，若负反馈接电阻，也可构成运算放大器
+   In this example, PA6 and PA3 are short-circuited, and the external voltage is input
+   from PB0. If the negative feedback is connected to a resistor, it can also form
+   an operational amplifier.
 */
 
 #include "debug.h"

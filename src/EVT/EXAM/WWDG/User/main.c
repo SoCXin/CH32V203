@@ -4,14 +4,17 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- 窗口看门狗例程：
- 本例程演示在窗口 0x40 —— 0x5f 之间喂狗，防止看门狗复位。
+ Window watchdog routine:
+ This routine demonstrates that the watchdog is fed between the window 0x40 - 0x5f to
+ prevent the watchdog from being reset.
 
 */
 
@@ -95,11 +98,11 @@ int main(void)
     printf("SystemClk:%d\r\n", SystemCoreClock);
 
     printf("WWDG Test\r\n");
-    WWDG_Config(0x7f, 0x5f, WWDG_Prescaler_8); /* 36M/8/4096 */
+    WWDG_Config(0x7f, 0x5f, WWDG_Prescaler_8); /* 48M/8/4096 */
     wwdg_wr = WWDG->CFGR & 0x7F;
     while(1)
     {
-        Delay_Ms(50);
+        Delay_Ms(10);
 
         printf("**********\r\n");
         wwdg_tr = WWDG->CTLR & 0x7F;

@@ -4,20 +4,24 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 /*
  *@Note
- SPI使用DMA，Master/Slave 模式收发例程：
- Master：SPI1_SCK(PA5)、SPI1_MISO(PA6)、SPI1_MOSI(PA7)。
- Slave：SPI1_SCK(PA5)、SPI1_MISO(PA6)、SPI1_MOSI(PA7)。
+ SPI DMA, master/slave mode transceiver routine:
+ Master:SPI1_SCK(PA5)\SPI1_MISO(PA6)\SPI1_MOSI(PA7).
+ Slave:SPI1_SCK(PA5)\SPI1_MISO(PA6)\SPI1_MOSI(PA7).
 
- 本例程演示 Master 和 Slave 同时使用 DAM 全双工收发。
- 注：两块板子分别下载 Master 和 Slave 程序，同时上电。
-     硬件连线：PA5 —— PA5
-               PA6 —— PA6
-               PA7 —— PA7
+ This example demonstrates that Master and Slave use DAM full-duplex transmission
+ and reception at the same time.
+ Note: The two boards download the Master and Slave programs respectively, and power
+ on at the same time.
+ Hardware connection:PA5 -- PA5
+                     PA6 -- PA6
+                     PA7 -- PA7
 
 */
 
@@ -29,8 +33,8 @@
 #define SLAVE_MODE    1
 
 /* SPI Communication Mode Selection */
-//#define SPI_MODE   HOST_MODE
-#define SPI_MODE      SLAVE_MODE
+#define SPI_MODE   HOST_MODE
+//#define SPI_MODE      SLAVE_MODE
 
 /* Global define */
 #define Size          18

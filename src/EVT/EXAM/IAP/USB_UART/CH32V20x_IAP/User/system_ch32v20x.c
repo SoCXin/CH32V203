@@ -6,9 +6,11 @@
  * Description        : CH32V20x Device Peripheral Access Layer System Source File.
  *                      For HSE = 32Mhz (CH32V208x/CH32V203RBT6)
  *                      For HSE = 8Mhz (other CH32V203x)
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *********************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 #include "ch32v20x.h" 
 
 /* 
@@ -105,30 +107,42 @@ void SystemInit (void)
 void SystemCoreClockUpdate (void)
 {
   uint32_t tmp = 0, pllmull = 0, pllsource = 0, Pll_6_5 = 0;
-	
+
   tmp = RCC->CFGR0 & RCC_SWS;
-  
+
   switch (tmp)
   {
     case 0x00:
       SystemCoreClock = HSI_VALUE;
       break;
-    case 0x04:  
+    case 0x04:
       SystemCoreClock = HSE_VALUE;
       break;
-    case 0x08: 
+    case 0x08:
       pllmull = RCC->CFGR0 & RCC_PLLMULL;
-      pllsource = RCC->CFGR0 & RCC_PLLSRC; 
+      pllsource = RCC->CFGR0 & RCC_PLLSRC;
       pllmull = ( pllmull >> 18) + 2;
-	  
+
       if(pllmull == 17) pllmull = 18;
-	  
+
       if (pllsource == 0x00)
       {
-        SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
+          if(EXTEN->EXTEN_CTR & EXTEN_PLL_HSI_PRE){
+              SystemCoreClock = HSI_VALUE * pllmull;
+          }
+          else{
+              SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
+          }
       }
       else
-      {    
+      {
+#if defined (CH32V20x_D8W)
+        if((RCC->CFGR0 & (3<<22)) == (3<<22))
+        {
+          SystemCoreClock = ((HSE_VALUE>>1)) * pllmull;
+        }
+        else
+#endif
         if ((RCC->CFGR0 & RCC_PLLXTPRE) != (uint32_t)RESET)
         {
 #if defined (CH32V20x_D8) || defined (CH32V20x_D8W)
@@ -154,11 +168,10 @@ void SystemCoreClockUpdate (void)
       SystemCoreClock = HSI_VALUE;
       break;
   }
- 
-  tmp = AHBPrescTable[((RCC->CFGR0 & RCC_HPRE) >> 4)];
-  SystemCoreClock >>= tmp;  
-}
 
+  tmp = AHBPrescTable[((RCC->CFGR0 & RCC_HPRE) >> 4)];
+  SystemCoreClock >>= tmp;
+}
 
 /*********************************************************************
  * @fn      SetSysClock
@@ -240,7 +253,11 @@ static void SetSysClockToHSE(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV1;
     
-    /* Select HSE as system clock source */
+    /* Select HSE as system clock source
+     *  CH32V20x_D6 (HSE=8MHZ)
+     *  CH32V20x_D8 (HSE=32MHZ)
+     *  CH32V20x_D8W (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_SW));
     RCC->CFGR0 |= (uint32_t)RCC_SW_HSE;    
 
@@ -301,6 +318,10 @@ static void SetSysClockTo24(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV1;
 
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 3 = 24 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 3 = 24 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 3 = 24 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE | RCC_PLLMULL));
 
     RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLXTPRE_HSE | RCC_PLLMULL3);
@@ -372,7 +393,10 @@ static void SetSysClockTo48(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
 
-    /*  PLL configuration: PLLCLK = HSE * 6 = 48 MHz */
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 6 = 48 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 6 = 48 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 6 = 48 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE | RCC_PLLMULL));
 
      RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLXTPRE_HSE | RCC_PLLMULL6);
@@ -445,7 +469,10 @@ static void SetSysClockTo56(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
   
-    /* PLL configuration: PLLCLK = HSE * 7 = 56 MHz */
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 7 = 56 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 7 = 56 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 7 = 56 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE | RCC_PLLMULL));
 
     RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLXTPRE_HSE | RCC_PLLMULL7);
@@ -519,7 +546,10 @@ static void SetSysClockTo72(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
  
-    /*  PLL configuration: PLLCLK = HSE * 9 = 72 MHz */
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 9 = 72 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 9 = 72 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 9 = 72 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE |
                                         RCC_PLLMULL));
 
@@ -594,7 +624,10 @@ static void SetSysClockTo96(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
 
-    /*  PLL configuration: PLLCLK = HSE * 12 = 96 MHz */
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 12 = 96 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 12 = 96 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 12 = 96 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE |
                                         RCC_PLLMULL));
 
@@ -635,67 +668,71 @@ static void SetSysClockTo96(void)
  */
 static void SetSysClockTo120(void)
 {
-  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+    __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
 
-  RCC->CTLR |= ((uint32_t)RCC_HSEON);
+    RCC->CTLR |= ((uint32_t)RCC_HSEON);
 
-  /* Wait till HSE is ready and if Time out is reached exit */
-  do
-  {
-    HSEStatus = RCC->CTLR & RCC_HSERDY;
-    StartUpCounter++;
-  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
-
-  if ((RCC->CTLR & RCC_HSERDY) != RESET)
-  {
-    HSEStatus = (uint32_t)0x01;
-  }
-  else
-  {
-    HSEStatus = (uint32_t)0x00;
-  }
-
-  if (HSEStatus == (uint32_t)0x01)
-  {
- 
-    
-
- 
-
-    /* HCLK = SYSCLK */
-    RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV1;
-    /* PCLK2 = HCLK */
-    RCC->CFGR0 |= (uint32_t)RCC_PPRE2_DIV1;
-    /* PCLK1 = HCLK */
-    RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
-
-    /*  PLL configuration: PLLCLK = HSE * 15 = 120 MHz */
-    RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE |
-                                        RCC_PLLMULL));
-
-    RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLXTPRE_HSE | RCC_PLLMULL15);
-
-    /* Enable PLL */
-    RCC->CTLR |= RCC_PLLON;
-    /* Wait till PLL is ready */
-    while((RCC->CTLR & RCC_PLLRDY) == 0)
+    /* Wait till HSE is ready and if Time out is reached exit */
+    do
     {
-    }
-    /* Select PLL as system clock source */
-    RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_SW));
-    RCC->CFGR0 |= (uint32_t)RCC_SW_PLL;
-    /* Wait till PLL is used as system clock source */
-    while ((RCC->CFGR0 & (uint32_t)RCC_SWS) != (uint32_t)0x08)
+        HSEStatus = RCC->CTLR & RCC_HSERDY;
+        StartUpCounter++;
+    } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+
+    if((RCC->CTLR & RCC_HSERDY) != RESET)
     {
+        HSEStatus = (uint32_t)0x01;
     }
-  }
-  else
-  {
+    else
+    {
+        HSEStatus = (uint32_t)0x00;
+    }
+
+    if(HSEStatus == (uint32_t)0x01)
+    {
+#if defined (CH32V20x_D8W)
+        RCC->CFGR0 |= (uint32_t)(3<<22);
+        /* HCLK = SYSCLK/2 */
+        RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV2;
+#else
+        /* HCLK = SYSCLK */
+        RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV1;
+#endif
+        /* PCLK2 = HCLK */
+        RCC->CFGR0 |= (uint32_t)RCC_PPRE2_DIV1;
+        /* PCLK1 = HCLK */
+        RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
+
+        /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 15 = 120 MHz (HSE=8MHZ)
+         *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 15 = 120 MHz (HSE=32MHZ)
+         *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/2 * 15 = 240 MHz (HSE=32MHZ)
+         */
+        RCC->CFGR0 &= (uint32_t)((uint32_t) ~(RCC_PLLSRC | RCC_PLLXTPRE |
+                                              RCC_PLLMULL));
+
+        RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLXTPRE_HSE | RCC_PLLMULL15);
+
+        /* Enable PLL */
+        RCC->CTLR |= RCC_PLLON;
+        /* Wait till PLL is ready */
+        while((RCC->CTLR & RCC_PLLRDY) == 0)
+        {
+        }
+        /* Select PLL as system clock source */
+        RCC->CFGR0 &= (uint32_t)((uint32_t) ~(RCC_SW));
+        RCC->CFGR0 |= (uint32_t)RCC_SW_PLL;
+        /* Wait till PLL is used as system clock source */
+        while((RCC->CFGR0 & (uint32_t)RCC_SWS) != (uint32_t)0x08)
+        {
+        }
+    }
+    else
+    {
         /*
          * If HSE fails to start-up, the application will have wrong clock
-     * configuration. User can add here some code to deal with this error
+         * configuration. User can add here some code to deal with this error
          */
-  }
+    }
 }
 
 
@@ -744,7 +781,10 @@ static void SetSysClockTo144(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;
 
-    /*  PLL configuration: PLLCLK = HSE * 18 = 144 MHz */
+    /*  CH32V20x_D6-PLL configuration: PLLCLK = HSE * 18 = 144 MHz (HSE=8MHZ)
+     *  CH32V20x_D8-PLL configuration: PLLCLK = HSE/4 * 18 = 144 MHz (HSE=32MHZ)
+     *  CH32V20x_D8W-PLL configuration: PLLCLK = HSE/4 * 18 = 144 MHz (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC | RCC_PLLXTPRE |
                                         RCC_PLLMULL));
 

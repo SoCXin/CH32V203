@@ -4,18 +4,21 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- MCO引脚时钟输出例程：
+ Get system-HCLK-AHB1-AHB2 clock routine:
  MCO(PA8)
- 本例程演示 MCO(PA8) 引脚输出系统时钟和获取时钟;
-    -RCC_GetClocksFreq()函数获取systemclk-HCLK-AHB1-AHB2时钟
-    -SystemCoreClockUpdate()函数获取 HCLK时钟
-    -system_ch32v20x.c文件中配置HSE二分频作为PLL源(仅应用于CH32V20x_D8W)
+ This example demonstrates MCO(PA8) pin output system clock and get clock;
+    -RCC_GetClocksFreq() function to get systemclk-HCLK-AHB1-AHB2 clock
+    -SystemCoreClockUpdate() function to get HCLK clock
+    -Configure the HSE two-way frequency division as the PLL source in
+    the system_ch32v20x.c file (applicable only to CH32V20x_D8W)
 
 */
 

@@ -1,12 +1,19 @@
 /********************************** (C) COPYRIGHT *******************************
-* File Name          : central.c
-* Author             : WCH
-* Version            : V1.1
-* Date               : 2020/08/06
-* Description        : 主机例程，主动扫描周围设备，连接至给定的从机设备地址，
-*                      寻找自定义服务及特征，执行读写命令，需与从机例程配合使用,
-                       并将从机设备地址修改为该例程目标地址，默认为(84:C2:E4:03:02:02)
-*******************************************************************************/
+ * File Name          : central.c
+ * Author             : WCH
+ * Version            : V1.1
+ * Date               : 2020/08/06
+ * Description        : The master routine actively scans the surrounding devices, 
+ *                      connects to the given slave device address, looks for custom 
+ *                      services and characteristics, and executes read and write commands.
+ *                      It needs to be used in conjunction with the slave routine, 
+ *                      and the slave device address is modified to the routine target address, 
+ *                      the default is (84:C2:E4:03:02:02)
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*********************************************************************
  * INCLUDES
@@ -516,7 +523,7 @@ static void centralProcessGATTMsg(gattMsgEvent_t *pMsg)
     }
     else if(pMsg->method == ATT_HANDLE_VALUE_NOTI)
     {
-        PRINT("Receive noti: %d\n", pMsg->msg.handleValueNoti.len);
+        PRINT("Receive noti: %x\n", *pMsg->msg.handleValueNoti.pValue);
     }
     else if(centralDiscState != BLE_DISC_STATE_IDLE)
     {
@@ -552,11 +559,7 @@ static void centralRssiCB(uint16_t connHandle, int8_t rssi)
  */
 static void centralHciMTUChangeCB(uint16_t connHandle, uint16_t maxTxOctets, uint16_t maxRxOctets)
 {
-    attExchangeMTUReq_t req;
-
-    req.clientRxMTU = maxRxOctets;
-    GATT_ExchangeMTU(connHandle, &req, centralTaskId);
-    PRINT("exchange mtu:%d\n", maxRxOctets);
+    PRINT(" HCI data length changed, Tx: %d, Rx: %d\n", maxTxOctets, maxRxOctets);
     centralProcedureInProgress = TRUE;
 }
 

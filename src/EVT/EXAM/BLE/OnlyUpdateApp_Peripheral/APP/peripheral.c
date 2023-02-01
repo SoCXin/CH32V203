@@ -3,10 +3,14 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2018/12/10
- * Description        : 外设从机多连接应用程序，初始化广播连接参数，然后广播，连接主机后，
- *                      请求更新连接参数，通过自定义服务传输数据
+ * Description        : Peripheral slave multi-connection application, 
+ *                      initialize broadcast connection parameters, then broadcast, 
+ *                      after connecting to the host, request to update connection parameters, 
+ *                      and transmit data through custom services
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /*********************************************************************
@@ -737,13 +741,13 @@ static void simpleProfileChangeCB(uint8_t paramID, uint8_t *pValue, uint16_t len
     }
 }
 
-/* OTA 升级标志 */
+/* OTA upgrade logo */
 #define IMAGE_OTA_FLAG       0x03
 
-/* 存放在DataFlash地址，不能占用蓝牙的位置 */
+/* Store on the DataFlash address, the position of Bluetooth cannot be occupied */
 #define OTA_DATAFLASH_ADD    0x08077000
 
-/* flash的数据临时存储 */
+/* Flash data temporary storage */
 __attribute__((aligned(8))) uint8_t block_buf[256];
 
 /*********************************************************************
@@ -765,7 +769,7 @@ void FLASH_read(uint32_t addr, uint8_t *pData, uint32_t len)
 /*********************************************************************
  * @fn      Jump_OTA
  *
- * @brief   跳转OTA升级
+ * @brief   Jump to OTA upgrade
  *
  * @return  none
  */
@@ -774,24 +778,24 @@ void Jump_OTA(void)
     uint16_t i;
     uint32_t ver_flag;
 
-    /* 读取第一块 */
+    /* Read the first block */
     FLASH_read(OTA_DATAFLASH_ADD, (uint8_t *)&block_buf[0], 4);
 
     FLASH_Unlock_Fast();
-    /* 擦除第一块 */
+    /* Erase the first block */
     FLASH_ErasePage_Fast( OTA_DATAFLASH_ADD );
 
-    /* 更新Image信息 */
+    /* Update Image information */
     block_buf[0] = IMAGE_OTA_FLAG;
     block_buf[1] = 0x5A;
     block_buf[2] = 0x5A;
     block_buf[3] = 0x5A;
 
-    /* 编程DataFlash */
+    /* Programming DataFlash */
     FLASH_ProgramPage_Fast(OTA_DATAFLASH_ADD, (uint32_t *)&block_buf[0]);
     FLASH_Lock_Fast();
 
-    /* 软复位 */
+    /* Software reset */
     NVIC_SystemReset();
 }
 

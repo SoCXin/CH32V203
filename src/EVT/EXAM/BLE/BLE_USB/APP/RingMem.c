@@ -1,11 +1,15 @@
 /********************************** (C) COPYRIGHT *******************************
-* File Name          : RingMem.C
-* Author             : Hikari
-* Version            : V1.4
-* Date               : 2019/12/20
-* Description        : 如果使用中断需注意开关中断
-            
-*******************************************************************************/
+ * File Name          : RingMem.C
+ * Author             : Hikari
+ * Version            : V1.4
+ * Date               : 2019/12/20
+ * Description        : 
+ * NOTE				 : If use interrupts, you need to pay attention to the switch interrupt    
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*********************************************************************
  * INCLUDES
@@ -59,10 +63,10 @@ uint8_t RingMemWrite( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
 	    RingMemProtection(ENABLE);
 	}
 
-	if( len > Parm->RemanentLen )							//要写长度超了
+	if( len > Parm->RemanentLen )
 		return !SUCCESS;
 	
-	edgelen = Parm->pEnd - Parm->pWrite;			//计算剩余到边界的长度
+	edgelen = Parm->pEnd - Parm->pWrite; //Calculate the length of the remaining to the boundary
 	
 	if( len > edgelen )
 	{
@@ -113,10 +117,10 @@ uint8_t RingMemRead( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
         RingMemProtection(ENABLE);
     }
 
-    if( len > Parm->CurrentLen )						//能读长度不够
+    if( len > Parm->CurrentLen )	//Not enough reading length
 		return !SUCCESS;
 	
-	edgelen = Parm->pEnd - Parm->pRead;			//计算剩余到边界的长度
+	edgelen = Parm->pEnd - Parm->pRead;			//Calculate the length of the remaining to the boundarythe length of the remaining to the boundary
 	
 	if( len > edgelen )
 	{
@@ -152,7 +156,7 @@ uint8_t RingMemRead( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
 /*********************************************************************
  * @fn      RingMemCopy
  *
- * @brief   读了不删
+ * @brief   Don't delete it after reading
  *
  * @param   none
  *
@@ -169,10 +173,10 @@ uint8_t RingMemCopy( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
 
 	uint8_t volatile *pRead = Parm->pRead;
 	
-	if( len > Parm->CurrentLen )						//能复制的长度不够
+	if( len > Parm->CurrentLen )						//The length that can be copied is not enough
 		return !SUCCESS;
 	
-	edgelen = Parm->pEnd - Parm->pRead;			//计算剩余到边界的长度
+	edgelen = Parm->pEnd - Parm->pRead;			//Calculate the length of the remaining to the boundary
 	
 	if( len > edgelen )
 	{
@@ -205,7 +209,7 @@ uint8_t RingMemCopy( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
 /*********************************************************************
  * @fn      RingMemDelete
  *
- * @brief   直接删
+ * @brief   Delete directly
  *
  * @param   none
  *
@@ -220,10 +224,10 @@ uint8_t RingMemDelete( RingMemParm_t *Parm, uint32_t len )
         RingMemProtection(ENABLE);
     }
 
-	if( len > Parm->CurrentLen )						//能删除长度不够
+	if( len > Parm->CurrentLen )						//Can delete not enough length
 		return !SUCCESS;
 	
-	edgelen = Parm->pEnd - Parm->pRead;			//计算剩余到边界的长度
+	edgelen = Parm->pEnd - Parm->pRead;			//Calculate the length of the remaining to the boundary
 	
 	if( len > edgelen )
 	{
@@ -265,10 +269,10 @@ uint8_t RingAddInStart( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
         RingMemProtection(ENABLE);
     }
 
-	if( len > Parm->RemanentLen )							//要写长度的超了
+	if( len > Parm->RemanentLen )
 		return !SUCCESS;
 	
-	edgelen = Parm->pRead - Parm->pData;			//计算剩余到边界的长度
+	edgelen = Parm->pRead - Parm->pData;			//Calculate the length of the remaining to the boundary
 	
 	if( len > edgelen )
 	{
@@ -304,7 +308,7 @@ uint8_t RingAddInStart( RingMemParm_t *Parm, uint8_t *pData, uint32_t len )
 /*********************************************************************
  * @fn      RingCopyOneData
  *
- * @brief   以首地址为基础返回第几个数据
+ * @brief   Back the first data on the basis of the first address
  *
  * @param   none
  *

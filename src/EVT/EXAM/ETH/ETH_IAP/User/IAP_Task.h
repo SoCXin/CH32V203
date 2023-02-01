@@ -4,8 +4,10 @@
 * Version            : V1.0.0
 * Date               : 2022/05/25
 * Description        : This file contains the headers of the IAP task.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 #ifndef __IAP_TASK_H__
 #define __IAP_TASK_H__
@@ -15,10 +17,10 @@
 
 /*
 flash:128K
-BIM area£¨Image Boot Manager£©£º40K
-USER area£¨ÓÃ»§´úÂëÇø£©£º44K
-BACKUP area£¨´úÂë±¸·İÇø£©£º44K
-address assignment£º
+BIM areaï¼ˆImage Boot Managerï¼‰ï¼š40K
+USER areaï¼ˆç”¨æˆ·ä»£ç åŒºï¼‰ï¼š44K
+BACKUP areaï¼ˆä»£ç å¤‡ä»½åŒºï¼‰ï¼š44K
+address assignmentï¼š
 0x0         size:0xA000
 0xA000      size:0xB000
 0x15000     size:0xB000

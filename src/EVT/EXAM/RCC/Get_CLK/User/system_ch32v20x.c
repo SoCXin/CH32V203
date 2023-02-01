@@ -6,9 +6,11 @@
  * Description        : CH32V20x Device Peripheral Access Layer System Source File.
  *                      For HSE = 32Mhz (CH32V208x/CH32V203RBT6)
  *                      For HSE = 8Mhz (other CH32V203x)
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *********************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 #include "ch32v20x.h" 
 
 /* 
@@ -83,24 +85,24 @@ void SystemInit (void)
 void SystemCoreClockUpdate (void)
 {
   uint32_t tmp = 0, pllmull = 0, pllsource = 0, Pll_6_5 = 0;
-	
+
   tmp = RCC->CFGR0 & RCC_SWS;
-  
+
   switch (tmp)
   {
     case 0x00:
       SystemCoreClock = HSI_VALUE;
       break;
-    case 0x04:  
+    case 0x04:
       SystemCoreClock = HSE_VALUE;
       break;
-    case 0x08: 
+    case 0x08:
       pllmull = RCC->CFGR0 & RCC_PLLMULL;
-      pllsource = RCC->CFGR0 & RCC_PLLSRC; 
+      pllsource = RCC->CFGR0 & RCC_PLLSRC;
       pllmull = ( pllmull >> 18) + 2;
-	  
+
       if(pllmull == 17) pllmull = 18;
-	  
+
       if (pllsource == 0x00)
       {
           if(EXTEN->EXTEN_CTR & EXTEN_PLL_HSI_PRE){
@@ -111,7 +113,7 @@ void SystemCoreClockUpdate (void)
           }
       }
       else
-      {    
+      {
 #if defined (CH32V20x_D8W)
         if((RCC->CFGR0 & (3<<22)) == (3<<22))
         {
@@ -144,9 +146,9 @@ void SystemCoreClockUpdate (void)
       SystemCoreClock = HSI_VALUE;
       break;
   }
- 
+
   tmp = AHBPrescTable[((RCC->CFGR0 & RCC_HPRE) >> 4)];
-  SystemCoreClock >>= tmp;  
+  SystemCoreClock >>= tmp;
 }
 
 
@@ -221,7 +223,11 @@ static void SetSysClockToHSE(void)
     /* PCLK1 = HCLK */
     RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV1;
     
-    /* Select HSE as system clock source */
+    /* Select HSE as system clock source
+     *  CH32V20x_D6 (HSE=8MHZ)
+     *  CH32V20x_D8 (HSE=32MHZ)
+     *  CH32V20x_D8W (HSE=32MHZ)
+     */
     RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_SW));
     RCC->CFGR0 |= (uint32_t)RCC_SW_HSE;    
 

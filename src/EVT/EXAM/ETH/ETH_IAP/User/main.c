@@ -4,21 +4,25 @@
 * Version            : V1.0.0
 * Date               : 2022/01/18
 * Description        : Main program body.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 #include "IAP_Task.h"
 /*
  *@Note
-ETH IAP例程，演示通过TCP数据传输，进行IAP。
-本例程使用软件为1_Tool_Doc文件夹下“VerifyBinTool_WCHNET”，
-使用手册为“WCHNET IAP升级方案使用教程”。
+ETH IAP example, demonstrating the transmission of data via TCP, perform IAP.
+This example uses the software as the 1_Tool_Doc folder under "VerifyBinTool_WCHNET",
+The user manual is "WCHNET IAP Upgrade Solution Tutorial".
+
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
 */
 
 u8 MACAddr[6];                                                      //MAC address

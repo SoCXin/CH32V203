@@ -3,13 +3,15 @@
  * Author             : WCH
  * Version            : V1.1
  * Date               : 2020/08/06
- * Description        : 外设从机应用主函数及任务系统初始化
+ * Description        : Peripheral slave application main function and task system initialization
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /******************************************************************************/
-/* 头文件包含 */
+/* Header file contains */
 #include "CONFIG.h"
 #include "HAL.h"
 #include "gattprofile.h"
@@ -26,9 +28,26 @@ const uint8_t MacAddr[6] = {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
 #endif
 
 /*********************************************************************
+ * @fn      Main_Circulation
+ *
+ * @brief   Main loop
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+__attribute__((noinline))
+void Main_Circulation(void)
+{
+    while(1)
+    {
+        TMOS_SystemProcess();
+    }
+}
+
+/*********************************************************************
  * @fn      main
  *
- * @brief   主函数
+ * @brief   Main function
  *
  * @return  none
  */
@@ -44,10 +63,7 @@ int main(void)
     GAPRole_PeripheralInit();
     Peripheral_Init();
     USBOTG_Init( );
-    while(1)
-    {
-        TMOS_SystemProcess();
-    }
+    Main_Circulation();
 }
 
 /******************************** endfile @ main ******************************/

@@ -4,16 +4,19 @@
 * Version            : V1.0.0
 * Date               : 2022/01/18
 * Description        : Main program body.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 /*
  *@Note
-DNS例程，演示DHCP自动获取IP后，再请求域名解析
+DNS example ,demonstrate that DHCP automatically obtains an IP address and then requests domain name resolution.
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
 */
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 
 u8 MACAddr[6];                                      //MAC address

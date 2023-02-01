@@ -3,9 +3,11 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2018/12/10
- * Description        : OTA升级蓝牙通讯接口
+ * Description        : OTA upgrade Bluetooth communication interface
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /*********************************************************************
@@ -135,11 +137,11 @@ gattServiceCBs_t OTAProfileCBs = {
 /*********************************************************************
  * @fn      OTAProfile_AddService
  *
- * @brief   OTA Profile初始化
+ * @brief   OTA Profile initialization
  *
- * @param   services    - 服务控制字
+ * @param   services    - Service control
  *
- * @return  初始化的状态
+ * @return  Initialization state
  */
 bStatus_t OTAProfile_AddService(uint32_t services)
 {
@@ -160,11 +162,11 @@ bStatus_t OTAProfile_AddService(uint32_t services)
 /*********************************************************************
  * @fn      OTAProfile_RegisterAppCBs
  *
- * @brief   OTA Profile读写回调函数注册
+ * @brief   OTA Profile read and write recovery function registration
  *
- * @param   appCallbacks    - 函数结构体指针
+ * @param   appCallbacks    - Function structure pointer
  *
- * @return  函数执行状态
+ * @return  Function execution status
  */
 bStatus_t OTAProfile_RegisterAppCBs(OTAProfileCBs_t *appCallbacks)
 {
@@ -306,19 +308,19 @@ static bStatus_t OTAProfile_WriteAttrCB(uint16_t connHandle, gattAttribute_t *pA
 /*********************************************************************
  * @fn      OTAProfile_SendData
  *
- * @brief   OTA Profile通道发送数据
+ * @brief   OTA Profile channel send data
  *
- * @param   paramID     - OTA通道选择
- * @param   p_data      - 数据指针
- * @param   send_len    - 发送数据长度
+ * @param   paramID     - OTA channel selection
+ * @param   p_data      - Data pointer
+ * @param   send_len    - Send data length
  *
- * @return  函数执行状态
+ * @return  Function execution status
  */
 bStatus_t OTAProfile_SendData(unsigned char paramID, unsigned char *p_data, unsigned char send_len)
 {
     bStatus_t status = SUCCESS;
 
-    /* 数据长度超出范围 */
+    /* Data length exceeds range */
     if(send_len > 20)
         return 0xfe;
 

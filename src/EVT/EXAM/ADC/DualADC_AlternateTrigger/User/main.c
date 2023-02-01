@@ -4,16 +4,18 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
-  双ADC交替触发采样例程：
- ADC1通道2(PA2),ADC2通道3(PA3)，注入组通过定时器2触发转换。
+  Dual ADC alternate trigger sampling routine:
+  Dual ADC alternate trigger sampling routine.
 
- 注：仅适用于CH32V203
+ Note:only applied to CH32V20x_D6
 */
 
 #include "debug.h"
@@ -38,7 +40,7 @@ void ADC_Function_Init(void)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
-    RCC_ADCCLKConfig(RCC_PCLK2_Div4);
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -74,7 +76,6 @@ void ADC_Function_Init(void)
     while(ADC_GetCalibrationStatus(ADC1));
     Calibrattion_Val1 = Get_CalibrationValue(ADC1);
 
-    ADC_BufferCmd(ADC1, ENABLE); //enable buffer
 
     ADC_Init(ADC2, &ADC_InitStructure);
     ADC_InjectedSequencerLengthConfig(ADC2, 1);
@@ -92,13 +93,12 @@ void ADC_Function_Init(void)
     while(ADC_GetCalibrationStatus(ADC2));
     Calibrattion_Val2 = Get_CalibrationValue(ADC2);
 
-    ADC_BufferCmd(ADC2, ENABLE); //enable buffer
 }
 
 /*********************************************************************
  * @fn      TIM2_PWM_In
  *
- * @brief   TIM2,PWM input mode init（Only CH1 and CH2 channels can be used）
+ * @brief   TIM2,PWM input mode init(Only CH1 and CH2 channels can be used)
  *
  * @param   arr - Auto reload values
  *          psc - Prescaler value

@@ -4,8 +4,10 @@
 * Version            : V1.0.0
 * Date               : 2022/05/25
 * Description        : IAP related functions.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 #include <stdlib.h>
 #include <string.h>
@@ -343,7 +345,7 @@ void saveUpdatedFile(void)
 
         /*After the data is saved, compare the checksum. If the checksum is correct,
          * update the upgrade flag. Disconnect if checksum error.*/
-        if((iapPara.iapFileLen == (flashProgramLen + BIN_INF_LEN))){
+        if(iapPara.iapFileLen == (flashProgramLen + BIN_INF_LEN)){
             if(fileCheckSum == iapPara.iapFileCheckSum){
                 printf("FileCheckSum is right!\r\n");
                 u32 updateFlag = IMAGE_FLAG_UPDATE;

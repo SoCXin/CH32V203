@@ -4,8 +4,10 @@
  * Version            : V1.0
  * Date               : 2022/06/30
  * Description        : 
- * Copyright (c) 2022 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 #include "config.h"
@@ -92,7 +94,7 @@ int uart_send(struct simple_buf *buf)
 tmosEvents uart_processevent(tmosTaskID task_id, tmosEvents events)
 {
     if(events & SYS_EVENT_MSG)
-    { // 处理HAL层消息，调用tmos_msg_receive读取消息，处理完成后删除消息。
+    {
         uint8_t *msgPtr;
 
         msgPtr = tmos_msg_receive(task_id);

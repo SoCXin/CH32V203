@@ -4,9 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2021/08/08
  * Description        : USB configuration file.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/ 
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/ 
 #include "usb_lib.h"
 #include "usb_prop.h"
 #include "usb_desc.h"
@@ -132,12 +134,7 @@ void USB_Port_Set(FunctionalState NewState, FunctionalState Pin_In_IPU)
 		_SetCNTR(_GetCNTR()&(~(1<<1)));
 		GPIOA->CFGHR&=0XFFF00FFF;
 		GPIOA->OUTDR&=~(3<<11);	//PA11/12=0
-
-#if defined(CH32V20x_D8) || defined(CH32V20x_D8W)
-    GPIOA->CFGHR|=0X00044000; //float
-#else
-        GPIOA->CFGHR|=0X00088000;   // IPD
-#endif
+        GPIOA->CFGHR|=0X00044000; //float
 	}
 	else
 	{	  

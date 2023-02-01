@@ -4,15 +4,18 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- CAN时间触发通信模式：
+ CAN time triggered communication mode:
  CAN_Tx(PB9),CAN_Rx(PB8)
- 在Extended_Frame，1个32bit过滤器屏蔽位通信配置下，演示时间触发通信模式。
+In the Extended_Frame, one 32bit filter mask bit communication configuration,
+ the demonstration time triggers the communication mode.
 
 */
 
@@ -23,8 +26,8 @@
 #define RX_MODE     1
 
 /* CAN Communication Mode Selection */
-#define CAN_MODE    TX_MODE
-//#define CAN_MODE   RX_MODE
+//#define CAN_MODE    TX_MODE
+#define CAN_MODE   RX_MODE
 
 /* Global Variable */
 u8 txbuf[8];
@@ -275,7 +278,7 @@ int main(void)
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
 
-    /* Bps = 250Kbps */
+    /* Bps = 333Kbps */
     CAN_Mode_Init(CAN_SJW_1tq, CAN_BS2_5tq, CAN_BS1_6tq, 12, CAN_Mode_Normal);
 
 #if(CAN_MODE == TX_MODE)

@@ -4,18 +4,21 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- CAN正常模式，标准帧和扩展帧数据收发：
+ CAN Normal mode, standard frame and expanded frame data transceiver:
  CAN_Tx(PB9),CAN_Rx(PB8)
- 该例程需外接CAN收发器，可演示 Standard_Frame 和 Extended_Frame。
- Standard_Frame：包括 1个32bit过滤器屏蔽位模式、2个16bit过滤器屏蔽位模式、
- 1个32bit标识符列表模式、2个16bit标识符列表模式；
- Extended_Frame：1个32bit过滤器屏蔽位模式。
+ This routine requires an external CAN transceiver to demonstrate
+ Standard_Frame and Extended_Frame.
+ Standard_Frame: including 1 32bit filter mask bit pattern, 2 16bit filter
+  mask bit patterns,one 32bit identifier list mode, 2 16bit identifier list modes;
+ Extended_Frame: 1 32bit filter mask bit pattern.
 
 */
 
@@ -99,7 +102,7 @@ void CAN_Mode_Init(u8 tsjw, u8 tbs2, u8 tbs1, u16 brp, u8 mode)
     CAN_FilterInitSturcture.CAN_FilterMaskIdHigh = 0xFFE0;
     CAN_FilterInitSturcture.CAN_FilterMaskIdLow = 0x0006;
 
-    /* identifier/mask mode, Two 16-bit filters, StdId: 0x317，0x316 */
+    /* identifier/mask mode, Two 16-bit filters, StdId: 0x317锟斤拷0x316 */
     //	CAN_FilterInitSturcture.CAN_FilterMode = CAN_FilterMode_IdMask;
     //	CAN_FilterInitSturcture.CAN_FilterScale = CAN_FilterScale_16bit;
     //	CAN_FilterInitSturcture.CAN_FilterIdHigh = 0x62E0;
@@ -107,7 +110,7 @@ void CAN_Mode_Init(u8 tsjw, u8 tbs2, u8 tbs1, u16 brp, u8 mode)
     //	CAN_FilterInitSturcture.CAN_FilterMaskIdHigh = 0x62C0;
     //	CAN_FilterInitSturcture.CAN_FilterMaskIdLow = 0xFFF8;
 
-    /* identifier list mode, One 32-bit filter, StdId: 0x317，0x316 */
+    /* identifier list mode, One 32-bit filter, StdId: 0x317锟斤拷0x316 */
     //	CAN_FilterInitSturcture.CAN_FilterMode = CAN_FilterMode_IdList;
     //	CAN_FilterInitSturcture.CAN_FilterScale = CAN_FilterScale_32bit;
     //	CAN_FilterInitSturcture.CAN_FilterIdHigh = 0x62E0;
@@ -247,7 +250,7 @@ int main(void)
     printf("Rx Mode\r\n");
 
 #endif
-    /* Bps = 250Kbps */
+    /* Bps = 333Kbps */
     CAN_Mode_Init(CAN_SJW_1tq, CAN_BS2_5tq, CAN_BS1_6tq, 12, CAN_Mode_Normal);
 
     while(1)

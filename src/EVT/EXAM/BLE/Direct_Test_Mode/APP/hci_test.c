@@ -4,8 +4,10 @@
  * Version            : V1.0
  * Date               : 2022/06/30
  * Description        : 
- * Copyright (c) 2022 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 #include "hci_test.h"
@@ -57,6 +59,13 @@ struct simple_buf *cmd_complete_status(uint8_t status)
     return buf;
 }
 
+static void reset(struct simple_buf *buf, struct simple_buf **evt)
+{
+	if (buf) {
+		PRINT("%s:\n", __FUNCTION__);
+		*evt = cmd_complete_status(0x00);
+	}
+}
 
 static void le_rx_test(struct simple_buf *buf, struct simple_buf **evt)
 {
@@ -66,7 +75,7 @@ static void le_rx_test(struct simple_buf *buf, struct simple_buf **evt)
 	PRINT("%s:\n", __FUNCTION__);
 	PRINT("  rx channel: %#x\n", cmd->rx_ch);
 
-    API_LE_ReceiverTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_RX_TEST);
+    status = API_LE_ReceiverTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_RX_TEST);
     *evt = cmd_complete_status(status);
 }
 
@@ -95,7 +104,7 @@ static void le_rx_test_v2(struct simple_buf *buf, struct simple_buf **evt)
     }
 	PRINT("  mod_index: %#x\n", cmd->mod_index);
 
-    API_LE_ReceiverTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_RX_TEST_V2);
+    status = API_LE_ReceiverTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_RX_TEST_V2);
     *evt = cmd_complete_status(status);
 }
 
@@ -138,7 +147,7 @@ static void le_tx_test(struct simple_buf *buf, struct simple_buf **evt)
 		break;
 	}
 	
-    API_LE_TransmitterTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_TX_TEST);
+    status =API_LE_TransmitterTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_TX_TEST);
     *evt = cmd_complete_status(status);
 }
 
@@ -200,7 +209,7 @@ static void le_tx_test_v2(struct simple_buf *buf, struct simple_buf **evt)
 		break;
     }
 
-    API_LE_TransmitterTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_TX_TEST_V2);
+    status = API_LE_TransmitterTestCmd((uint8_t *)cmd, BT_HCI_OP_LE_TX_TEST_V2);
     *evt = cmd_complete_status(status);
 }
 
@@ -263,6 +272,20 @@ static void le_set_single_carrier(struct simple_buf *buf, struct simple_buf **ev
 
 	status = LL_SingleChannel(sc->single_carrier);
 	*evt = cmd_complete_status(status);
+}
+
+static int ctrl_bb_cmd_handle(uint16_t ocf, struct simple_buf *cmd,
+			      struct simple_buf **evt)
+{
+	switch (ocf) {
+	case BT_OCF(BT_HCI_OP_RESET):
+		reset(cmd, evt);
+		break;
+	default:
+		return -1;
+	}
+
+	return 0;
 }
 
 static int controller_cmd_handle(uint16_t ocf, struct simple_buf *cmd,
@@ -344,6 +367,9 @@ struct simple_buf *hci_cmd_handle(struct simple_buf *cmd)
 	ocf = BT_OCF(_opcode);
 
 	switch (BT_OGF(_opcode)) {
+	case BT_OGF_BASEBAND:
+		err = ctrl_bb_cmd_handle(ocf, cmd, &evt);
+		break;
 	case BT_OGF_LE:
 		err = controller_cmd_handle(ocf, cmd, &evt);
 		break;

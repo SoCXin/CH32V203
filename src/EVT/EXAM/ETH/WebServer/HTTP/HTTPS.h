@@ -4,9 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2022/05/31
  * Description        : HTTP related parameters.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 #ifndef	__HTTPS_H__
 #define	__HTTPS_H__
@@ -30,20 +32,20 @@
 #define MAX_URL_SIZE              128
 #define HTTP_SERVER_PORT          80
 
-/* HTTP请求方法 */
+/* HTTP璇锋眰鏂规硶 */
 #define	METHOD_ERR		          0
 #define	METHOD_GET		          1
 #define	METHOD_HEAD		          2
 #define	METHOD_POST		          3
 
-/* HTTP请求类型 */
+/* HTTP璇锋眰绫诲瀷 */
 #define	PTYPE_ERR		          0
 #define	PTYPE_HTML	              1
 #define	PTYPE_PNG		          2
 #define	PTYPE_CSS		          3
 #define PTYPE_GIF                 4
 
-/*WCHNET网页通信协议定义*/
+/*WCHNET缃戦〉閫氫俊鍗忚瀹氫箟*/
 #define MODE_TCPSERVER            0
 #define MODE_TCPCLIENT            1
 
@@ -122,7 +124,7 @@ extern u8 httpweb[200] ;
 
 extern u8 RecvBuffer[];
 
-extern u8 flag;
+extern u8 DealDataflag;
 
 extern u8 socket;
 

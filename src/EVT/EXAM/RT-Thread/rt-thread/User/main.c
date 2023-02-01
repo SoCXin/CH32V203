@@ -4,9 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 #include "ch32v20x.h"
 #include <rtthread.h>
 #include <rthw.h>
@@ -16,15 +18,15 @@
 
 /* Global define */
 
-/* LED0通过rt的pin驱动接口驱动  */
-#define LED0_PIN  11   //PC3
+/* LED0 is driven by the pin driver interface of rt  */
+#define LED0_PIN  11   //PA0
 
 /* Global Variable */
 
 /*********************************************************************
  * @fn      LED1_BLINK_INIT
  *
- * @brief   LED1通过直接调用底层驱动
+ * @brief   LED1 directly calls the underlying driver
  *
  * @return  none
  */
@@ -39,10 +41,11 @@ void LED1_BLINK_INIT(void)
 }
 
 
-/* main只是一个线程之一，除此之外还有tshell,idle
-   *    本main只是一个LED闪烁，main线程的注册在rtthread_startup
-   *   中，tshell使用了串口接收中断，中断栈和线程栈使用分开，注意进中断时候
- * 16caller寄存器需要压入线程栈中
+/* main is just one of the threads, in addition to tshell,idle
+   *    main is just an LED blinking, the main thread is registered in rtthread_startup,
+   *   tshell uses the serial port to receive interrupts, and the interrupt stack and thread stack are
+   *   used separately.Note that when entering an interrupt, the 16caller register needs to be pushed 
+   *   into the thread stack
  * */
 int main(void)
 {
@@ -62,7 +65,7 @@ int main(void)
 }
 
 
-/* 测试使用驱动接口操作I/O口  */
+/* Test using the driver interface to operate the I/O port  */
 int led(void)
 {
     rt_uint8_t count;

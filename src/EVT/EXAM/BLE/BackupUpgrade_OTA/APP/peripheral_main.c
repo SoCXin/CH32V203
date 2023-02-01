@@ -3,13 +3,15 @@
  * Author             : WCH
  * Version            : V1.1
  * Date               : 2019/11/05
- * Description        : 外设从机应用主函数及任务系统初始化
+ * Description        : Peripheral slave application main function and task system initialization
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /******************************************************************************/
-/* 头文件包含 */
+/* Header file contains */
 #include "CONFIG.h"
 #include "HAL.h"
 #include "GATTprofile.h"
@@ -17,7 +19,7 @@
 #include "OTA.h"
 #include "OTAprofile.h"
 
-/* 记录当前的Image */
+/* Record the current image */
 unsigned char CurrImageFlag = 0xff;
 
 /*********************************************************************
@@ -30,16 +32,18 @@ const uint8_t MacAddr[6] =
     {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
 #endif
 
-/* 用于APP判断文件有效性 */
+/* Used for app judgment file effectiveness */
 const uint32_t Address = 0xFFFFFFFF;
 
 __attribute__((aligned(4))) uint32_t Image_Flag __attribute__((section(".ImageFlag"))) = (uint32_t)&Address;
 
-/* 注意：关于程序升级后flash的操作必须先执行，不开启任何中断，防止操作中断和失败 */
+/* Note: The operation of Flash after the program is upgraded must be performed first without 
+ * turning on any interruption to prevent operation interruption and failure */
 /*********************************************************************
  * @fn      ReadImageFlag
  *
- * @brief   读取当前的程序的Image标志，DataFlash如果为空，就默认是ImageA
+ * @brief   Read the iMage logo of the current program. If the DataFlash is empty, 
+ *          it will be ImageA by default
  *
  * @return  none
  */
@@ -50,7 +54,8 @@ void ReadImageFlag(void)
     FLASH_read(OTA_DATAFLASH_ADD, (uint8_t*)&p_image_flash, 4);
     CurrImageFlag = p_image_flash.ImageFlag;
 
-    /* 程序第一次执行，或者没有更新过，以后更新后在擦除DataFlash */
+    /* The program is executed for the first time, or it has not been updated, 
+     * and the DataFlash will be erased after the subsequent update. */
     if((CurrImageFlag != IMAGE_A_FLAG) && (CurrImageFlag != IMAGE_B_FLAG))
     {
         CurrImageFlag = IMAGE_A_FLAG;
@@ -58,9 +63,26 @@ void ReadImageFlag(void)
 }
 
 /*********************************************************************
+ * @fn      Main_Circulation
+ *
+ * @brief   Main loop
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+__attribute__((noinline))
+void Main_Circulation(void)
+{
+    while(1)
+    {
+        TMOS_SystemProcess();
+    }
+}
+
+/*********************************************************************
  * @fn      main
  *
- * @brief   主函数
+ * @brief   Main function
  *
  * @return  none
  */
@@ -75,10 +97,7 @@ int main(void)
     HAL_Init();
     GAPRole_PeripheralInit();
     Peripheral_Init();
-    while(1)
-    {
-        TMOS_SystemProcess();
-    }
+    Main_Circulation();
 }
 
 /******************************** endfile @ main ******************************/

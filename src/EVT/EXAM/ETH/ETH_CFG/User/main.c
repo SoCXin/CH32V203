@@ -4,17 +4,22 @@
 * Version            : V1.0.0
 * Date               : 2022/01/18
 * Description        : Main program body.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 /*
  *@Note
-ETH_CFG例程，创建一个UDP Server用于与上位机通信，以配置WCHNET功能，包括各项参数以及创建一个新的通信.
-本例程使用软件为1_Tool_Doc文件夹下“WCH NET网络参数配置工具”。
+ETH_CFG example, create a UDP Server to communicate with the host computer, configure WCHNET features,
+including parameters, and create a new communication.
+This example uses the software for the 1_Tool_Doc folder under "WCH NET Network Parameter Configuration Tool".
+
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
 */
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 #include "ModuleConfig.h"
 

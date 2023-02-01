@@ -4,8 +4,10 @@
  * Version            : V1.0
  * Date               : 2018/12/11
  * Description        :
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 #ifndef PERIPHERAL_H
@@ -44,11 +46,11 @@ typedef struct
     uint16_t connTimeout;
 } peripheralConnItem_t;
 
-RingMemParm_t RingMemUSB;
-uint8_t RingMemUSBBuf[2048];
-RingMemParm_t RingMemBLE;
-uint8_t RingMemBLEBuf[2048];
-uint8_t Peripheral_TaskID;
+extern RingMemParm_t RingMemUSB;
+extern uint8_t RingMemUSBBuf[2048];
+extern RingMemParm_t RingMemBLE;
+extern uint8_t RingMemBLEBuf[2048];
+extern uint8_t Peripheral_TaskID;
 /*********************************************************************
  * FUNCTIONS
  */

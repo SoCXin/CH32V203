@@ -4,19 +4,22 @@
  * Version            : V1.0.0
  * Date               : 2022/05/31
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 /*
  *@Note
- TCP Server例程，演示TCP Server连接到客户端后接收数据并回传
+TCP Server example, demonstrating that TCP Server receives data and sends back after connecting to a client.
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
  */
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 
-#define KEEPLIVE_ENABLE                1                //Enable keeplive function
+#define KEEPALIVE_ENABLE                1               //Enable keep alive function
 
 u8 MACAddr[6];                                          //MAC address
 u8 IPAddr[4] = { 192, 168, 1, 10 };                     //IP address
@@ -156,7 +159,7 @@ void WCHNET_HandleSockInt(u8 socketid, u8 intstat)
     }
     if (intstat & SINT_STAT_CONNECT)                              //connect successfully
     {
-#if KEEPLIVE_ENABLE
+#if KEEPALIVE_ENABLE
         WCHNET_SocketSetKeepLive(socketid, ENABLE);
 #endif
         WCHNET_ModifyRecvBuf(socketid, (u32) SocketRecvBuf[socketid],
@@ -257,7 +260,7 @@ int main(void)
     mStopIfError(i);
     if (i == WCHNET_ERR_SUCCESS)
         printf("WCHNET_LibInit Success\r\n");
-#if KEEPLIVE_ENABLE                                               //Configure keeplive parameters
+#if KEEPALIVE_ENABLE                                               //Configure keep alive parameters
     {
         struct _KEEP_CFG cfg;
 

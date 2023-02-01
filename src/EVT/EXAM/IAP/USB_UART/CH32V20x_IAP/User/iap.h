@@ -4,9 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2020/12/16
  * Description        : IAP
- * *Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 #ifndef __IAP_H
 #define __IAP_H
 
@@ -38,7 +40,7 @@
 typedef struct __attribute__ ((aligned(4)))_ISP_CMD {
     u8 Cmd;
     u8 Len;
-    u8 adr[2];
+    u8 Rev[2];
     u8 data[60];
 } isp_cmd;
 
@@ -57,7 +59,7 @@ void GPIO_Cfg_init(void);
 u8 PA0_Check(void);
 void EP2_RecData_Deal(void);
 void EP2_IN_Tx_Deal(void);
-void USART1_CFG(u32 baudrate);
+void USART3_CFG(u32 baudrate);
 
 void UART_Rx_Deal(void);
 

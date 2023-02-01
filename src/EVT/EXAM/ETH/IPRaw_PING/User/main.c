@@ -4,16 +4,19 @@
 * Version            : V1.0.0
 * Date               : 2022/01/18
 * Description        : Main program body.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 /*
  *@Note
-IPRaw_PING例程，演示PING功能。
+IPRaw_PING example, demonstrate the PING feature.
+For details on the selection of engineering chips,
+please refer to the "CH32V20x Evaluation Board Manual" under the CH32V20xEVT\EVT\PUB folder.
 */
 #include "string.h"
 #include "debug.h"
-#include "wchnet.h"
 #include "eth_driver.h"
 #include "PING.h"
 
@@ -176,7 +179,7 @@ int main(void)
 
     Delay_Init();
     USART_Printf_Init(115200);                                              //USART initialize
-    printf("TcpClient Test\r\n");
+    printf("IPRaw_PING Test\r\n");
     printf("SystemClk:%d\r\n",SystemCoreClock);
     printf("net version:%x\n",WCHNET_GetVer());
     if( WCHNET_LIB_VER != WCHNET_GetVer() ){

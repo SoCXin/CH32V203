@@ -5,9 +5,11 @@
  * Date               : 2021/08/08
  * Description        : This file contains all the functions prototypes for the  
  *                      USB configration firmware library.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/ 
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/ 
 #ifndef __USB_CONF_H
 #define __USB_CONF_H
 

@@ -4,17 +4,22 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
-  双ADC混合同步规则+注入采样例程：
-  规则组ADC1通道1(PA1)、ADC2通道4(PA4)，注入组ADC1通道3(PA3)ADC2通道5(PA5))
-  规则组注入组均采用软件触发，通过DMA中断获取双ADC规则组数据，通过ADC中断获取双ADC注入组数据。
+  dual ADC combined regular + injection + simultaneous sampling routine:
+  Rule group ADC1 channel 1 (PA1), ADC2 channel 4 (PA4), injection group ADC1
+  channel 3 (PA3) ADC2 channel 5 (PA5))
+  The rule group injection groups are all triggered by software, and the dual ADC
+  rule group data is obtained through the DMA interrupt, and the dual ADC injection
+  group data is obtained through the ADC interrupt.
 
-  注：仅适用于CH32V203
+  Note:only applied to CH32V20x_D6
 */
 
 #include "debug.h"
@@ -45,7 +50,7 @@ void ADC_Function_Init(void)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
-    RCC_ADCCLKConfig(RCC_PCLK2_Div4);
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -87,7 +92,6 @@ void ADC_Function_Init(void)
     while(ADC_GetCalibrationStatus(ADC1));
     Calibrattion_Val1 = Get_CalibrationValue(ADC1);
 
-    ADC_BufferCmd(ADC1, ENABLE); //enable buffer
 
     ADC_Init(ADC2, &ADC_InitStructure);
     ADC_RegularChannelConfig(ADC2, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);

@@ -4,9 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2021/08/08
  * Description        : Descriptors for Virtual Com Port Demo.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/ 
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/ 
 #include "usb_lib.h"
 #include "usb_desc.h"
 #include "iap.h"

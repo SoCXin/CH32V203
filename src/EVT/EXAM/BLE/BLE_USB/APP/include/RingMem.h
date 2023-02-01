@@ -1,11 +1,14 @@
 /********************************** (C) COPYRIGHT *******************************
-* File Name          : RingMem.h
-* Author             : Hikari
-* Version            : V1.4
-* Date               : 2019/12/20
-* Description        :
-
-*******************************************************************************/
+ * File Name          : RingMem.h
+ * Author             : Hikari
+ * Version            : V1.4
+ * Date               : 2019/12/20
+ * Description        :
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*********************************************************************
  * INCLUDES
@@ -37,16 +40,16 @@ typedef unsigned short uint16;
 typedef unsigned long  uint32_t;
 typedef int (*RingMemProtection_t)(uint8_t enable);
 
-//缓冲区结构体
+//Buffer structure
 typedef struct
 {
-    uint8_t volatile *pData;       //缓冲区首地址
-    uint8_t volatile *pWrite;      //写指针
-    uint8_t volatile *pRead;       //读指针
-    uint8_t volatile *pEnd;        //缓冲区末地址
-    uint32_t volatile RemanentLen; //剩余空间大小
-    uint32_t volatile CurrentLen;  //已用空间大小
-    uint32_t volatile MaxLen;      //总空间大小
+    uint8_t volatile *pData;       //Buffer first address
+    uint8_t volatile *pWrite;      //Pointer
+    uint8_t volatile *pRead;       //Pointer
+    uint8_t volatile *pEnd;        //The last address of the buffer area
+    uint32_t volatile RemanentLen; //Remaining space size
+    uint32_t volatile CurrentLen;  //Already used space
+    uint32_t volatile MaxLen;      //Total space size
 } RingMemParm_t;
 
 /*********************************************************************

@@ -508,13 +508,6 @@ static bStatus_t simpleProfile_ReadAttrCB(uint16_t connHandle, gattAttribute_t *
 {
     bStatus_t status = SUCCESS;
 
-    // If attribute permissions require authorization to read, return error
-    if(gattPermitAuthorRead(pAttr->permissions))
-    {
-        // Insufficient authorization
-        return (ATT_ERR_INSUFFICIENT_AUTHOR);
-    }
-
     // Make sure it's not a blob operation (no attributes in the profile are long)
     if(offset > 0)
     {

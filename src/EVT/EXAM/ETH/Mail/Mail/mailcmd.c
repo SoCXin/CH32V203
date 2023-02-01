@@ -4,8 +4,10 @@
 * Version            : V1.0.0
 * Date               : 2020/05/06
 * Description        : Send and receive mail function.
+*********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* SPDX-License-Identifier: Apache-2.0
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
 #include "mailcmd.h"
 
@@ -361,11 +363,11 @@ void WCHNET_SMTPMailHeader( void )
     strcat( send_buff, "\r\n" );
     //"Date: " 
     strcat( send_buff, "Date: ");
-//    strcat( send_buff, "" );     /* Ê±¼ä    */
+//    strcat( send_buff, "" );     /* æ—¶é—´    */
      strcat( send_buff, "\r\n" );
     /* "X-Mailer: " */
     strcat( send_buff, g_xMailer );
-    /* ÓĞ¸½¼ş */
+    /* æœ‰é™„ä»¶ */
     if( p_smtp->g_MIME == 1 ){
         strcat( send_buff, "MIME-Version: 1.0\r\nContent-Type: " );
         strcat( send_buff, g_MailHedType );
@@ -686,9 +688,9 @@ void WCHNET_POP3Stat( void )
  */
 void WCHNET_POP3List( void )
 {
-#if    0            /* Èç¹ûĞèÖ¸¶¨Ä³·âÓÊ¼şÔòÖÃ1 */
+#if    0            /* å¦‚æœéœ€æŒ‡å®šæŸå°é‚®ä»¶åˆ™ç½®1 */
     char num;
-    num = '1';    /* ¸ù¾İĞèÒªĞŞ¸ÄÓÊ¼şºÅ */
+    num = '1';    /* æ ¹æ®éœ€è¦ä¿®æ”¹é‚®ä»¶å· */
     memset( send_buff, '\0', sizeof(send_buff) );
     sprintf( send_buff, "%s %c\r\n", POP3_CLIENT_CMD[4],num );
 #else

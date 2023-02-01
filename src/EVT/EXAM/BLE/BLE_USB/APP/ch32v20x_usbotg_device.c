@@ -4,8 +4,10 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : This file provides all the USBOTG firmware functions.
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 #include "ch32v20x_usbotg_device.h"
 #include "CONFIG.h"
@@ -44,26 +46,26 @@ PUINT8 pEP6_RAM_Addr; //ep6_out(64)+ep6_in(64)
 PUINT8 pEP7_RAM_Addr; //ep7_out(64)+ep7_in(64)
 
 const UINT8    *pDescr;
-volatile UINT8  USBHD_Dev_SetupReqCode = 0xFF;   /* USB2.0全速设备Setup包命令码 */
-volatile UINT16 USBHD_Dev_SetupReqLen = 0x00;    /* USB2.0全速设备Setup包长度 */
-volatile UINT8  USBHD_Dev_SetupReqValueH = 0x00; /* USB2.0全速设备Setup包Value高字节 */
-volatile UINT8  USBHD_Dev_Config = 0x00;         /* USB2.0全速设备配置值 */
-volatile UINT8  USBHD_Dev_Address = 0x00;        /* USB2.0全速设备地址值 */
-volatile UINT8  USBHD_Dev_SleepStatus = 0x00;    /* USB2.0全速设备睡眠状态 */
-volatile UINT8  USBHD_Dev_EnumStatus = 0x00;     /* USB2.0全速设备枚举状态 */
-volatile UINT8  USBHD_Dev_Endp0_Tog = 0x01;      /* USB2.0全速设备端点0同步标志 */
-volatile UINT8  USBHD_Dev_Speed = 0x01;          /* USB2.0全速设备速度 */
+volatile UINT8  USBHD_Dev_SetupReqCode = 0xFF;   /* USB2.0 full-speed device setup package command */
+volatile UINT16 USBHD_Dev_SetupReqLen = 0x00;    /* USB2.0 full-speed device setup package length */
+volatile UINT8  USBHD_Dev_SetupReqValueH = 0x00; /* USB2.0 full-speed device setup package value high byte */
+volatile UINT8  USBHD_Dev_Config = 0x00;         /* USB2.0 full-speed device configuration value */
+volatile UINT8  USBHD_Dev_Address = 0x00;        /* USB2.0 full-speed device address value */
+volatile UINT8  USBHD_Dev_SleepStatus = 0x00;    /* USB2.0 full-speed device sleep state */
+volatile UINT8  USBHD_Dev_EnumStatus = 0x00;     /* USB2.0 full-speed device enumeration status */
+volatile UINT8  USBHD_Dev_Endp0_Tog = 0x01;      /* USB2.0 Full-speed device endpoint 0 sync flag*/
+volatile UINT8  USBHD_Dev_Speed = 0x01;          /* USB2.0 Full-speed device speed */
 
-volatile UINT16 USBHD_Endp1_Up_Flag = 0x00;   /* USB2.0全速设备端点1数据上传状态: 0:空闲; 1:正在上传; */
-volatile UINT8  USBHD_Endp1_Down_Flag = 0x00; /* USB2.0全速设备端点1下传成功标志 */
-volatile UINT8  USBHD_Endp1_Down_Len = 0x00;  /* USB2.0全速设备端点1下传长度 */
-volatile BOOL   USBHD_Endp1_T_Tog = 0;        /* USB2.0全速设备端点1发送tog位翻转 */
+volatile UINT16 USBHD_Endp1_Up_Flag = 0x00;   /* USB2.0 full-speed device endpoint 1 data upload status: 0: free; 1: upload; */
+volatile UINT8  USBHD_Endp1_Down_Flag = 0x00; /* USB2.0 full-speed device endpoint 1 Pass successful logo */
+volatile UINT8  USBHD_Endp1_Down_Len = 0x00;  /* USB2.0 full-speed device endpoint 1 download length */
+volatile BOOL   USBHD_Endp1_T_Tog = 0;        /* USB2.0 full speed device endpoint 1 sends tog bit flip */
 volatile BOOL   USBHD_Endp1_R_Tog = 0;
 
-volatile UINT16 USBHD_Endp2_Up_Flag = 0x00;    /* USB2.0全速设备端点2数据上传状态: 0:空闲; 1:正在上传; */
-volatile UINT16 USBHD_Endp2_Up_LoadPtr = 0x00; /* USB2.0全速设备端点2数据上传装载偏移 */
-volatile UINT8  USBHD_Endp2_Down_Flag = 0x00;  /* USB2.0全速设备端点2下传成功标志 */
-volatile BOOL   USBHD_Endp2_T_Tog = 0;         /* USB2.0全速设备端点2发送tog位翻转 */
+volatile UINT16 USBHD_Endp2_Up_Flag = 0x00;    /* USB2.0 full-speed device endpoint 2 Data upload status: 0: free; 1: upload; */
+volatile UINT16 USBHD_Endp2_Up_LoadPtr = 0x00; /* USB2.0 full-speed device endpoint 2 Data upload loading offset */
+volatile UINT8  USBHD_Endp2_Down_Flag = 0x00;  /* USB2.0 full-speed device endpoint 2 download success flag */
+volatile BOOL   USBHD_Endp2_T_Tog = 0;         /* USB2.0 full speed device endpoint 2 sends tog bit flip */
 volatile BOOL   USBHD_Endp2_R_Tog = 0;
 
 volatile UINT32V Endp2_send_seq = 0x00;
@@ -82,10 +84,10 @@ const UINT8 MyDevDescrHD[] = {
 /* Configration Descriptor */
 const UINT8 MyCfgDescrHD[] =
     {
-        0x09, 0x02, 0x27, 0x00, 0x01, 0x01, 0x00, 0x80, 0xf0, //配置描述符，接口描述符,端点描述符
+        0x09, 0x02, 0x27, 0x00, 0x01, 0x01, 0x00, 0x80, 0xf0, //Configure descriptor, interface descriptor, endpoint descriptor
         0x09, 0x04, 0x00, 0x00, 0x03, 0xff, 0x01, 0x02, 0x00,
-        0x07, 0x05, 0x82, 0x02, 0x20, 0x00, 0x00, //批量上传端点
-        0x07, 0x05, 0x02, 0x02, 0x20, 0x00, 0x00, //批量下传端点
+        0x07, 0x05, 0x82, 0x02, 0x20, 0x00, 0x00, //Bulk upload endpoint
+        0x07, 0x05, 0x02, 0x02, 0x20, 0x00, 0x00, //Bulk download endpoint
         0x07, 0x05, 0x81, 0x03, 0x08, 0x00, 0x01};
 
 /* Language Descriptor */
@@ -103,7 +105,7 @@ const UINT8 MyProdInfoHD[] =
     {
         0x0C, 0x03, 'C', 0, 'H', 0, '1', 0, '0', 0, 'x', 0};
 
-/*产品描述符*/
+/* Product descriptor */
 const uint8_t StrDesc[28] =
     {
         0x1C, 0x03, 0x55, 0x00, 0x53, 0x00, 0x42, 0x00,
@@ -185,8 +187,8 @@ void USBDeviceInit(void)
  */
 void USBOTG_RCC_Init(void)
 {
-    RCC->CFGR2 &= ~RCC_USBFS_CLK_SRC; //usbotg 时钟选择 0 = systick，1 = usb20_phy
-    RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_Div3);
+    RCC->CFGR2 &= ~RCC_USBFS_CLK_SRC; //usbotg clock selection: 0 = systick, 1 = usb20_phy
+    RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_Div2);
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_OTG_FS, ENABLE);
 }
 
@@ -199,7 +201,7 @@ void USBOTG_RCC_Init(void)
  */
 void USBOTG_Init(void)
 {
-    /* 端点缓冲区初始化 */
+    /* Endpoint buffer initialization */
     pEP0_RAM_Addr = EP0_DatabufHD;
     pEP1_RAM_Addr = EP1_DatabufHD;
     pEP2_RAM_Addr = EP2_DatabufHD;
@@ -208,12 +210,12 @@ void USBOTG_Init(void)
     pEP5_RAM_Addr = EP5_DatabufHD;
     pEP6_RAM_Addr = EP6_DatabufHD;
     pEP7_RAM_Addr = EP7_DatabufHD;
-    /* 使能usb时钟 */
+    /* Enable USB clock */
     USBOTG_RCC_Init();
     Delay_Us(100);
-    /* usb设备初始化 */
+    /* USB device initialization */
     USBDeviceInit();
-    /* 使能usb中断 */
+    /* Enable USB interrupt */
     NVIC_EnableIRQ(USBHD_IRQn);
 }
 
@@ -235,18 +237,8 @@ void USBHD_IRQHandler(void)
     {
         switch(USBOTG_FS->INT_ST & USBHD_UIS_TOKEN_MASK)
         {
-            /* SETUP包处理 */
+            /* Setup package processing */
             case USBHD_UIS_TOKEN_SETUP:
-#if 0
-                /* 打印当前Usbsetup命令  */
-                printf("Setup Req :\n");
-                printf("%02X ", pSetupReqPakHD->bRequestType);
-                printf("%02X ", pSetupReqPakHD->bRequest);
-                printf("%04X ", pSetupReqPakHD->wValue);
-                printf("%04X ", pSetupReqPakHD->wIndex);
-                printf("%04X ", pSetupReqPakHD->wLength);
-                printf("\n");
-#endif
 
                 USBOTG_FS->UEP0_TX_CTRL = USBHD_UEP_T_TOG | USBHD_UEP_T_RES_NAK;
                 USBOTG_FS->UEP0_RX_CTRL = USBHD_UEP_R_TOG | USBHD_UEP_R_RES_ACK;
@@ -255,10 +247,10 @@ void USBHD_IRQHandler(void)
                 chtype = pSetupReqPakHD->bRequestType;
                 len = 0;
                 errflag = 0;
-                /* 判断当前是标准请求还是其他请求 */
+                /* Determine whether the current standard request or other requests */
                 if((pSetupReqPakHD->bRequestType & USB_REQ_TYP_MASK) != USB_REQ_TYP_STANDARD)
                 {
-                    /* 其它请求,如类请求,产商请求等 */
+                    /* Other requests, such as class requests, manufacturer requests, etc. */
                     if(pSetupReqPakHD->bRequestType == 0xC0)
                     {
                         if(SetupReqCode == 0x5F)
@@ -291,7 +283,7 @@ void USBHD_IRQHandler(void)
                 }
                 else
                 {
-                    /* 处理标准USB请求包 */
+                    /* Processing standard USB request package */
                     switch(SetupReqCode)
                     {
                         case USB_GET_DESCRIPTOR:
@@ -299,35 +291,35 @@ void USBHD_IRQHandler(void)
                             switch(((pSetupReqPakHD->wValue) >> 8))
                             {
                                 case USB_DESCR_TYP_DEVICE:
-                                    /* 获取设备描述符 */
+                                    /* Get the device descriptor */
                                     pDescr = MyDevDescrHD;
                                     len = MyDevDescrHD[0];
                                     break;
 
                                 case USB_DESCR_TYP_CONFIG:
-                                    /* 获取配置描述符 */
+                                    /* Get the configuration descriptor */
                                     pDescr = MyCfgDescrHD;
                                     len = MyCfgDescrHD[2];
                                     break;
 
                                 case USB_DESCR_TYP_STRING:
-                                    /* 获取字符串描述符 */
+                                    /* Get the string descriptor */
                                     switch((pSetupReqPakHD->wValue) & 0xff)
                                     {
                                         case 0:
-                                            /* 语言字符串描述符 */
+                                            /* Language string descriptor */
                                             pDescr = MyLangDescrHD;
                                             len = MyLangDescrHD[0];
                                             break;
 
                                         case 1:
-                                            /* USB产商字符串描述符 */
+                                            /* USB manufacturer string descriptor */
                                             pDescr = MyManuInfoHD;
                                             len = MyManuInfoHD[0];
                                             break;
 
                                         case 2:
-                                            /* USB产品字符串描述符 */
+                                            /* USB product string descriptor */
                                             pDescr = StrDesc;
                                             len = StrDesc[0];
                                             break;
@@ -345,8 +337,8 @@ void USBHD_IRQHandler(void)
                                     break;
 
                                 case USB_DESCR_TYP_BOS:
-                                    /* BOS描述符 */
-                                    /* USB2.0设备不支持BOS描述符 */
+                                    /* BOS descriptor */
+                                    /* USB2.0 device does not support the BOS descriptor */
                                     errflag = 0xFF;
                                     break;
 
@@ -364,27 +356,27 @@ void USBHD_IRQHandler(void)
                         break;
 
                         case USB_SET_ADDRESS:
-                            /* 设置地址 */
+                            /* Setting address */
                             SetupReqLen = (pSetupReqPakHD->wValue) & 0xff;
                             break;
 
                         case USB_GET_CONFIGURATION:
-                            /* 获取配置值 */
+                            /* Get the configuration value */
                             pEP0_DataBuf[0] = DevConfig;
                             if(SetupReqLen > 1)
                                 SetupReqLen = 1;
                             break;
 
                         case USB_SET_CONFIGURATION:
-                            /* 设置配置值 */
+                            /* Set the configuration value */
                             DevConfig = (pSetupReqPakHD->wValue) & 0xff;
                             break;
 
                         case USB_CLEAR_FEATURE:
-                            /* 清除特性 */
+                            /* Cleaer feature */
                             if((pSetupReqPakHD->bRequestType & USB_REQ_RECIP_MASK) == USB_REQ_RECIP_ENDP)
                             {
-                                /* 清除端点 */
+                                /* Clear endpoint */
                                 switch((pSetupReqPakHD->wIndex) & 0xff)
                                 {
                                     case 0x82:
@@ -413,15 +405,15 @@ void USBHD_IRQHandler(void)
                             break;
 
                         case USB_SET_FEATURE:
-                            /* 设置特性 */
+                            /* Set feature */
                             if((pMySetupReqPakHD->bRequestType & 0x1F) == 0x00)
                             {
-                                /* 设置设备 */
+                                /* Setting device */
                                 if(pMySetupReqPakHD->wValue == 0x01)
                                 {
                                     if(MyCfgDescrHD[7] & 0x20)
                                     {
-                                        /* 设置唤醒使能标志 */
+                                        /* Set wake-up enable flag */
                                         USBHD_Dev_SleepStatus = 0x01;
                                     }
                                     else
@@ -436,32 +428,32 @@ void USBHD_IRQHandler(void)
                             }
                             else if((pMySetupReqPakHD->bRequestType & 0x1F) == 0x02)
                             {
-                                /* 设置端点 */
+                                /* Set the endpoint */
                                 if(pMySetupReqPakHD->wValue == 0x00)
                                 {
-                                    /* 设置指定端点STALL */
+                                    /* Set the specified endpoint stall */
                                     switch((pMySetupReqPakHD->wIndex) & 0xff)
                                     {
                                         case 0x82:
-                                            /* 设置端点2 IN STALL */
+                                            /* Set endpoint 2 IN STALL */
                                             USBOTG_FS->UEP2_TX_CTRL = (USBOTG_FS->UEP2_TX_CTRL &= ~USBHD_UEP_T_RES_MASK) | USBHD_UEP_T_RES_STALL;
                                             //USBHS->UEP2_CTRL  = ( USBHS->UEP2_CTRL & ~USBHS_EP_T_RES_MASK ) | USBHS_EP_T_RES_STALL;
                                             break;
 
                                         case 0x02:
-                                            /* 设置端点2 OUT Stall */
+                                            /* Set endpoint 2 OUT Stall */
                                             USBOTG_FS->UEP2_RX_CTRL = (USBOTG_FS->UEP2_RX_CTRL &= ~USBHD_UEP_R_RES_MASK) | USBHD_UEP_R_RES_STALL;
                                             //USBHS->UEP2_CTRL  = ( USBHS->UEP2_CTRL & ~USBHS_EP_R_RES_MASK ) | USBHS_EP_R_RES_STALL;
                                             break;
 
                                         case 0x81:
-                                            /* 设置端点1 IN STALL */
+                                            /* Set endpoint 1 IN STALL */
                                             USBOTG_FS->UEP1_TX_CTRL = (USBOTG_FS->UEP1_TX_CTRL &= ~USBHD_UEP_T_RES_MASK) | USBHD_UEP_T_RES_STALL;
                                             //USBHS->UEP1_CTRL  = ( USBHS->UEP1_CTRL & ~USBHS_EP_T_RES_MASK ) | USBHS_EP_T_RES_STALL;
                                             break;
 
                                         case 0x01:
-                                            /* 设置端点1 OUT STALL */
+                                            /* Set endpoint 1 OUT STALL */
                                             USBOTG_FS->UEP1_RX_CTRL = (USBOTG_FS->UEP1_RX_CTRL &= ~USBHD_UEP_R_RES_MASK) | USBHD_UEP_R_RES_STALL;
                                             //USBHS->UEP1_CTRL  = ( USBHS->UEP1_CTRL & ~USBHS_EP_R_RES_MASK ) | USBHS_EP_R_RES_STALL;
                                             break;
@@ -483,14 +475,14 @@ void USBHD_IRQHandler(void)
                             break;
 
                         case USB_GET_INTERFACE:
-                            /* 获取接口 */
+                            /* Obtain interface */
                             pEP0_DataBuf[0] = 0x00;
                             if(SetupReqLen > 1)
                                 SetupReqLen = 1;
                             break;
 
                         case USB_SET_INTERFACE:
-                            /* 设置接口 */
+                            /* Set interface */
                             EP0_DatabufHD[0] = 0x00;
                             if(USBHD_Dev_SetupReqLen > 1)
                             {
@@ -499,7 +491,7 @@ void USBHD_IRQHandler(void)
                             break;
 
                         case USB_GET_STATUS:
-                            /* 根据当前端点实际状态进行应答 */
+                            /* Reply according to the actual state of the current endpoint */
                             EP0_DatabufHD[0] = 0x00;
                             EP0_DatabufHD[1] = 0x00;
                             if(pMySetupReqPakHD->wIndex == 0x81)
@@ -543,11 +535,6 @@ void USBHD_IRQHandler(void)
                 }
                 if(errflag == 0xff)
                 {
-#if 0
-                    printf("uep0 stall\n");
-
-#endif
-
                     USBOTG_FS->UEP0_TX_CTRL = USBHD_UEP_T_TOG | USBHD_UEP_T_RES_STALL;
                     USBOTG_FS->UEP0_RX_CTRL = USBHD_UEP_R_TOG | USBHD_UEP_R_RES_STALL;
                 }
@@ -595,7 +582,7 @@ void USBHD_IRQHandler(void)
                                 break;
                         }
                         break;
-                        /* 默认回NCK */
+                        /* Back to NCK by default */
                     case USBHD_UIS_TOKEN_IN | 1:
                         USBOTG_FS->UEP1_TX_CTRL ^= USBHD_UEP_T_TOG;
                         USBOTG_FS->UEP1_TX_CTRL = (USBOTG_FS->UEP1_TX_CTRL & ~USBHD_UEP_T_RES_MASK) | USBHD_UEP_T_RES_NAK;
@@ -708,10 +695,6 @@ void USBHD_IRQHandler(void)
                         }
                         break;
                 }
-#if 0
-                printf( "len %d\n", len );
-
-#endif
                 break;
 
             case USBHD_UIS_TOKEN_SOF:
@@ -769,7 +752,7 @@ void USBHD_IRQHandler(void)
 /*********************************************************************
  * @fn      USBSendData
  *
- * @brief   发送数据给主机
+ * @brief   Send data to the host
  *
  * @return  none
  */

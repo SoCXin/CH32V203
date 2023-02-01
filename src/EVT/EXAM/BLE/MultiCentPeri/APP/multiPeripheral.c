@@ -3,10 +3,14 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2022/03/18
- * Description        : 外设从机多连接应用程序，初始化广播连接参数，然后广播，连接主机后，
- *                      请求更新连接参数，通过自定义服务传输数据
+ * Description        : Peripheral slave multi-connection application, 
+ *                      initialize broadcast connection parameters, then broadcast, 
+ *                      after connecting to the host, request to update connection 
+ *                      parameters, and transmit data through custom services
+ *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
 /*********************************************************************
@@ -345,17 +349,17 @@ uint16_t Peripheral_ProcessEvent(uint8_t task_id, uint16_t events)
         return (events ^ SBP_START_DEVICE_EVT);
     }
 
-    // 连接0的任务处理
+    // Task processing of connection 0
     if(task_id == peripheralConnList[CONNECT0_ITEM].taskID)
     {
         return connect0_ProcessEvent(task_id, events);
     }
-    // 连接1的任务处理
+    // Task processing of connection 1
     else if(task_id == peripheralConnList[CONNECT1_ITEM].taskID)
     {
         return connect1_ProcessEvent(task_id, events);
     }
-    // 连接2的任务处理
+    // Task processing of connection 2
     else if(task_id == peripheralConnList[CONNECT2_ITEM].taskID)
     {
         return connect2_ProcessEvent(task_id, events);
@@ -636,6 +640,7 @@ static void Peripheral_LinkEstablished(gapRoleEvent_t *pEvent)
         peripheralConnList[connItem].connInterval = event->connInterval;
         peripheralConnList[connItem].connSlaveLatency = event->connLatency;
         peripheralConnList[connItem].connTimeout = event->connTimeout;
+        peripheralMTU = ATT_MTU_SIZE;
 
         // Set timer for periodic event
         tmos_start_task(peripheralConnList[connItem].taskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD);
@@ -875,6 +880,11 @@ static void performPeriodicTask(uint16_t connHandle)
 static void peripheralChar4Notify(uint16_t connHandle, uint8_t *pValue, uint16_t len)
 {
     attHandleValueNoti_t noti;
+    if(len > (peripheralMTU - 3))
+    {
+        PRINT("Too large noti\n");
+        return;
+    }
     noti.len = len;
     noti.pValue = GATT_bm_alloc(connHandle, ATT_HANDLE_VALUE_NOTI, noti.len, NULL, 0);
     tmos_memcpy(noti.pValue, pValue, noti.len);

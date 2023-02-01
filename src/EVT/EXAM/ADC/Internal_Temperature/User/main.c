@@ -4,14 +4,17 @@
  * Version            : V1.0.0
  * Date               : 2021/06/06
  * Description        : Main program body.
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * SPDX-License-Identifier: Apache-2.0
- *******************************************************************************/
+*********************************************************************************
+* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+* Attention: This software (modified or not) and binary are used for 
+* microcontroller manufactured by Nanjing Qinheng Microelectronics.
+*******************************************************************************/
 
 /*
  *@Note
- 内部温度传感器例程：
- 通过ADC通道16，采集内部温度传感器输出电压值和温度值。
+ Internal temperature sensor routine:
+ Through the ADC channel 16, the output voltage value and temperature value of
+ the internal temperature sensor are collected.
 
 */
 
