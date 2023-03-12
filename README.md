@@ -36,10 +36,18 @@
 * [参考文档](docs/)
 * [参考工程](project/)
 
+
 ## [选型建议](https://github.com/SoCXin)
 
-[CH32V203](https://item.szlcsc.com/3483852.html)是现阶段（2022-2023）爆款主推产品，也是￥3档位MCU的金牌产品，可以看做所[CH32V103](https://github.com/SoCXin/CH32V103)的升级型号。
+[CH32V203](https://item.szlcsc.com/3483852.html)可以看做所[CH32V103](https://github.com/SoCXin/CH32V103)的升级型号。
 
 [CH32V203](https://www.wch.cn/products/CH32V203.html?) 系列官方例程支持多种RTOS，包括FreeRTOS、HarmonyOS、RT-Thread、TencentOS等。
 
-### [www.SoC.xin](http://www.SoC.Xin)
+是现阶段（2022-2023）￥3档位MCU的金牌产品，该档的推荐产品还包括：[N32G430](https://github.com/SoCXin/N32G430)
+
+* [WCHISPTool](https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html)
+* [WCH-LinkUtility](https://www.wch.cn/downloads/WCH-LinkUtility_ZIP.html)
+
+### 开源方案
+
+* [DAPLink](https://github.com/XIVN1987/DAPLink)
